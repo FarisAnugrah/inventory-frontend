@@ -61,7 +61,7 @@ export default function LayoutProvider({ children }) {
           </aside>
 
           <div className="flex flex-col h-screen w-full">
-            <header className="flex justify-end bg-red-500 text-white p-6 font-semibold">
+            <header className="flex justify-end bg-red-500 text-white p-6 font-semibold gap-3">
               Tiara Sofa
               <img
                 src="/assets/images/test.jpg"
