@@ -9,13 +9,21 @@ export default function user() {
   ];
 
   const data = [
-    { no: 1, nama: "Tiaragit ", role: "Admin" },
-    { no: 2, nama: "Sofa", role: "Petugas" }
+    { no: 1, nama: "Tiara", role: "Admin" },
+    { no: 2, nama: "Sofa", role: "Staff" }
   ];
 
   return (
     <div className="p-6">
-      <Table columns={columns} data={data} />
+      <Table
+      columns={columns}
+      data={data}
+      showAddButton={true}
+      showSearch={true}
+      showPagination={true}
+      showWeekFilter={false}
+      showControls={true}
+      />
     </div>
   );
 }
