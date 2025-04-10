@@ -59,12 +59,12 @@ export default function LayoutProvider({ children }) {
               ))}
             </nav>
           </aside>
-
+         
           <div className="flex flex-col h-screen w-full">
-            <header className="flex justify-end bg-blue-200 text-white p-6 font-semibold gap-3">
+            <header className="flex justify-end bg-blue-200 text-black p-6 font-semibold gap-3 items-center">
               Tiara Sofa
               <img
-                src="/assets/images/test.jpg"
+                src="/assets/images/profiletest.jpg"
                 alt="profile"
                 width={40}
                 height={40}
