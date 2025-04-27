@@ -11,7 +11,6 @@ export default function barangKeluar() {
               </select>
               <span>entries</span>
             </div>
-         
 
   const columns = [
     { header: "No", accessor: "no" },

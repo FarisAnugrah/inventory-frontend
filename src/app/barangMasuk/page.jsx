@@ -2,15 +2,14 @@ import Table from '@/components/Table';
 
 export default function barangMasuk() {
   <div className="flex items-center gap-2">
-              <span>Show</span>
-              <select className="select select-bordered select-sm w-20">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
-              <span>entries</span>
-            </div>
-         
+    <span>Show</span>
+    <select className="select select-bordered select-sm w-20">
+      <option>10</option>
+      <option>25</option>
+      <option>50</option>
+    </select>
+    <span>entries</span>
+  </div>
 
   const columns = [
     { header: "No", accessor: "no" },
