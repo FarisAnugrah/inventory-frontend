@@ -20,7 +20,6 @@ export default function LayoutProvider({ children }) {
     { icon: <Boxes size={20} />, label: "Stok Barang" },
     { icon: <Download size={20} />, label: "Barang Masuk" },
     { icon: <Upload size={20} />, label: "Barang Keluar" },
-    { icon: <Settings size={20} />, label: "Pengaturan" },
   ];
 
   const pathname = usePathname();
