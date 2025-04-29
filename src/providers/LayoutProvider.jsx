@@ -20,7 +20,7 @@ export default function LayoutProvider({ children }) {
     { icon: <Boxes size={20} />, label: "Stok Barang" },
     { icon: <Download size={20} />, label: "Barang Masuk" },
     { icon: <Upload size={20} />, label: "Barang Keluar" },
-    { icon: <Settings size={20} />, label: "Pengaturan" },
+
   ];
 
   const pathname = usePathname();
@@ -29,7 +29,7 @@ export default function LayoutProvider({ children }) {
     <>
       {!pathname.includes("/auth") ? (
         <div className="w-full flex overflow-hidden">
-          <aside className="h-screen bg-primary w-64">
+         <aside className="h-screen bg-primary w-64 p-4">
             <div className="flex items-center gap-2 mb-10">
               <Image
                 src="/assets/images/box.png"
