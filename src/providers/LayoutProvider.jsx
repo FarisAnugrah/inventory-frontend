@@ -11,15 +11,16 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function LayoutProvider({ children }) {
   const menuItems = [
-    { icon: <Home size={20} />, label: "Dashboard" },
-    { icon: <Users size={20} />, label: "User Management" },
-    { icon: <Package size={20} />, label: "Pengelola Barang" },
-    { icon: <Boxes size={20} />, label: "Stok Barang" },
-    { icon: <Download size={20} />, label: "Barang Masuk" },
-    { icon: <Upload size={20} />, label: "Barang Keluar" },
+    { icon: <Home size={20} />, label: "Dashboard", href:"/dashboard/admin" },
+    { icon: <Users size={20} />, label: "User Management", href:"/pengelola-pengguna" },
+    { icon: <Package size={20} />, label: "Pengelola Barang", href:"/pengelola-kategori" },
+    { icon: <Boxes size={20} />, label: "Stok Barang", href:"/stok" },
+    { icon: <Download size={20} />, label: "Barang Masuk", href:"/barangMasuk" },
+    { icon: <Upload size={20} />, label: "Barang Keluar", href:"/barangKeluar" },
 
   ];
 
@@ -42,20 +43,29 @@ export default function LayoutProvider({ children }) {
 
             <nav className="flex flex-col gap-4">
               {menuItems.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between text-sm hover:text-gray-300"
-                >
-                  <div className="flex items-center gap-3">
+                <Link
+                key={index}
+                href={item.href}
+                className={`flex items-center justify-between text-sm p-2 rounded-lg
+                  ${pathname === item.href
+                    ? ' text-[#414245]'
+                    : 'text-[#FFFFFF] hover:text-gray-600'
+                  }
+                `}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`${pathname === item.href ? 'text-[#414245]' : 'text-[#B3D8F1]'}`}>
                     {item.icon}
-                    <span>{item.label}</span>
                   </div>
-                  {item.count !== undefined && (
-                    <span className="bg-red-500 px-2 py-0.5 rounded-full text-xs font-semibold">
-                      {item.count}
-                    </span>
-                  )}
+                  <span>{item.label}</span>
                 </div>
+              
+                {item.count !== undefined && (
+                  <span className="bg-red-500 px-2 py-0.5 rounded-full text-xs font-semibold">
+                    {item.count}
+                  </span>
+                )}
+              </Link>                           
               ))}
             </nav>
           </aside>
