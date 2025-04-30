@@ -20,13 +20,14 @@ export default function barangKeluar() {
     { header: "Nama Supplier", accessor: "supplier" },
     { header: "Stok Keluar", accessor: "stok" },
     { header: "Tanggal Keluar", accessor: "tanggal" },
+    { header: "Kode Transaksi", accessor: "transaksi" },
   ];
 
   const data = [
-    { no: 1, user: "Suci Indah", kode: "BRG-1234567895", nama: "Indomie", supplier: "CV Indah", stok: "100", satuan: "Karton" },
-    { no: 2, user: "Suci Indah", kode: "BRG-1234567897", nama: "Le Minerale", supplier: "CV Intan", stok: "20", satuan: "Karton" },
-    { no: 3, user: "Suci Indah", kode: "BRG-1234567898", nama: "Tolak Angin", supplier: "CV Persada", stok: "3", satuan: "Karton" },
-    { no: 4, user: "Suci Indah", kode: "BRG-1234567893", nama: "Lampu Phillips", supplier: "CV Utama", stok: "40", satuan: "Karton" },
+    { no: 1, user: "Suci Indah", kode: "BRG-1234567895", nama: "Indomie", supplier: "CV Indah", stok: "100", tanggal: "22-06-2024", transaksi: "K-2525" },
+    { no: 2, user: "Suci Indah", kode: "BRG-1234567897", nama: "Le Minerale", supplier: "CV Intan", stok: "20", tanggal: "20-05-2024" , transaksi: "K-3030" },
+    { no: 3, user: "Suci Indah", kode: "BRG-1234567898", nama: "Tolak Angin", supplier: "CV Persada", stok: "3", tanggal: "14-05-2024", transaksi: "K-4040" },
+    { no: 4, user: "Suci Indah", kode: "BRG-1234567893", nama: "Lampu Phillips", supplier: "CV Utama", stok: "40", tanggal: "10-05-2024", transaksi: "K-1010" },
 
   ];
   return (
