@@ -7,7 +7,6 @@ export default function user() {
     { header: "Email", accessor: "email" },
     { header: "Password", accessor: "password" },
     { header: "Role", accessor: "role" },
-    { header: "Action" }, // ini untuk tombol
   ];
 
   const data = [

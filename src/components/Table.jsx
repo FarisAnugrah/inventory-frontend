@@ -4,20 +4,32 @@ import { useRouter } from 'next/navigation';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 
-export default function Table({
-    columns = [],
-    data = [],
-    showAddButton = true,
-    showControls = true,
-    showWeekFilter = true,
-    showPagination = true,
-    showSearch = true,
-    entriesOptions = [5, 10, 25],
-    defaultEntries = 5,
-}) {
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+
+export default function CustomTable(param) {
+    const {
+        columns = [],
+        data = [],
+        showAddButton = true,
+        showControls = true,
+        showWeekFilter = true,
+        showPagination = true,
+        showSearch = true,
+        showActions = true,
+        entriesOptions = [5, 10, 20],
+    } = param;
+
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
-    const [entries, setEntries] = useState(defaultEntries);
+    const [entries, setEntries] = useState(entriesOptions[0]); // FIX: defaultEntries undefined → pakai default dari entriesOptions
     const [page, setPage] = useState(1);
     const [selectedWeek, setSelectedWeek] = useState('');
     const [showEdit, setShowEdit] = useState(false);
@@ -112,14 +124,17 @@ export default function Table({
             <div className="overflow-x-auto">
                 <table className="table w-full text-black border border-gray-200">
                     <thead className="bg-blue-200 text-black border-b border-gray-200">
-                        <tr>
-                            {columns.map((col, index) => (
-                                <th key={index} className="py-2 px-4 border-r border-gray-200">
-                                    {col.header}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
+                    <tr>
+                        {columns.map((col, index) => (
+                            <th key={index} className="py-2 px-4 border-r border-gray-200">
+                                {col.header}
+                            </th>
+                        ))}
+                        {showActions && (
+                            <th className="py-2 px-4 border-r border-gray-200">Action</th>
+                        )}
+                    </tr>
+                </thead>
                     <tbody className="bg-white">
                         {displayedData.map((row, rowIndex) => (
                             <tr key={rowIndex}>
@@ -127,26 +142,25 @@ export default function Table({
                                     <td key={colIndex} className="py-2 px-4 border-t border-r border-gray-200">
                                         {col.accessor === 'no'
                                             ? startIndex + rowIndex + 1
-                                            : col.accessor
-                                                ? row[col.accessor]
-                                                : (
-                                                    <div className="flex gap-2">
-                                                        <button
-                                                            className="btn btn-sm text-white bg-red-500"
-                                                            onClick={() => handleEdit(row)}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-sm text-black bg-blue-300"
-                                                            onClick={() => handleDelete(row)}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                )}
+                                            : row[col.accessor]}
                                     </td>
                                 ))}
+                                <td className="py-2 px-4 border-t border-r border-gray-200">
+                                    <div className="flex gap-2">
+                                        <button
+                                            className="btn btn-sm text-white bg-red-500"
+                                            onClick={() => handleEdit(row)}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="btn btn-sm text-black bg-blue-300"
+                                            onClick={() => handleDelete(row)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
