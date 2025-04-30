@@ -18,10 +18,9 @@ export default function LayoutProvider({ children }) {
     { icon: <Home size={20} />, label: "Dashboard", href:"/dashboard/admin" },
     { icon: <Users size={20} />, label: "User Management", href:"/pengelola-pengguna" },
     { icon: <Package size={20} />, label: "Pengelola Barang", href:"/pengelola-kategori" },
-    { icon: <Boxes size={20} />, label: "Stok Barang", href:"/stok" },
-    { icon: <Download size={20} />, label: "Barang Masuk", href:"/barangMasuk" },
-    { icon: <Upload size={20} />, label: "Barang Keluar", href:"/barangKeluar" },
-
+    { icon: <Boxes size={20} />, label: "Stok Barang", href:"/stok/admin" },
+    { icon: <Download size={20} />, label: "Barang Masuk", href:"/barangMasuk/admin" },
+    { icon: <Upload size={20} />, label: "Barang Keluar", href:"/barangKeluar/admin" },
   ];
 
   const pathname = usePathname();
