@@ -2,7 +2,8 @@ import { X } from "lucide-react"; // Pastikan kamu install lucide-react: npm ins
 
 export default function DetailModal({ item, onClose }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+
       <div className="bg-white rounded-md w-[500px] shadow-lg">
         {/* Header */}
         <div className="flex justify-between items-center border-b px-6 py-4">

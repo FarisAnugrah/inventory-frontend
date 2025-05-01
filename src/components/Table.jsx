@@ -26,6 +26,7 @@ export default function CustomTable(param) {
         showActions = true,
         showDetailsOnly = false,
         entriesOptions = [5, 10, 20],
+        onDetailClick = () => {},
     } = param;
 
     const router = useRouter();
@@ -150,14 +151,15 @@ export default function CustomTable(param) {
                                 <td className="py-2 px-4 border-t border-r border-gray-200">
 
                                 <div className="flex gap-2">
-                                    {showDetailsOnly ? (
+                                {showDetailsOnly ? (
                                     <button
                                         className="btn btn-sm text-black bg-blue-200 font-normal"
-                                        onClick={() => router.push(`/detail-user/${row.id}`)}
-                                    >
+                                        onClick={() => onDetailClick(row)} // ✅ Panggil fungsi dari props
+                                         >
                                         Detail
-                                    </button>
-                                    ) : (
+                                        </button>
+                                        ) : (
+
                                     <>
                                         <button
                                         className="btn btn-sm text-white bg-red-500 font-normal"

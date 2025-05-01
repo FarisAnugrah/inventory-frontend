@@ -14,18 +14,7 @@ export default function MenyetujuiBarang() {
     { header: "Nama Supplier", accessor: "supplier" },
     { header: "Stok Keluar", accessor: "stok" },
     { header: "Tanggal Keluar", accessor: "tanggal" },
-    {
-      header: "Action",
-      accessor: "action",
-      cell: ({ row }) => (
-        <button
-          className="bg-blue-300 hover:bg-blue-400 text-black px-3 py-1 rounded"
-          onClick={() => setSelectedItem(row.original)}
-        >
-          Detail
-        </button>
-      ),
-    },
+    
   ];
 
   const data = [
@@ -40,12 +29,14 @@ export default function MenyetujuiBarang() {
       <Table
         columns={columns}
         data={data}
-        showAddButton={true}
+        showAddButton={false}
         showSearch={true}
         showPagination={true}
         showWeekFilter={false}
         showControls={true}
-        showDetailsOnly={true} // Ensure this prop is passed correctly
+        showDetailsOnly={true}
+        onDetailClick={(item) => setSelectedItem(item)}
+         // Ensure this prop is passed correctly
       />
       {selectedItem && (
         <DetailModal
