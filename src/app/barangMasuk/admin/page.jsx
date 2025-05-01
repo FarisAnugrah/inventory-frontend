@@ -15,7 +15,7 @@ export default function barangMasuk() {
     { header: "No", accessor: "no" },
     { header: "Nama User", accessor: "user" },
     { header: "Kode Masuk", accessor: "kode" },
-    { header: "Nama Barang", accessor: "nama" },
+    { header: "Nama Barang", accessor: "barang" },
     { header: "Nama Supplier", accessor: "supplier" },
     { header: "Stok Masuk", accessor: "stok" },
     { header: "Tanggal Masuk", accessor: "tanggal" },
@@ -27,10 +27,9 @@ export default function barangMasuk() {
     { no: 3, user: "Suci Indah", kode: "BRG-1234567898", nama: "Tolak Angin", supplier: "CV Persada", stok: "3", satuan: "Karton", tanggal: "16-05-2025" },
     { no: 4, user: "Suci Indah", kode: "BRG-1234567893", nama: "Lampu Phillips", supplier: "CV Utama", stok: "40", satuan: "Karton" , tanggal: "17-05-2025"},
 
+
   ];
   return (
-  
-    
     <div className="p-6">
       <Table columns={columns} data={data} />
             

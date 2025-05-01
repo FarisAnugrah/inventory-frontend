@@ -5,7 +5,6 @@ export default function pengelola() {
         { header: "No", accessor: "no" },
         { header: "Jenis Barang", accessor: "jenis" },
         { header: "Nama Barang", accessor: "barang" },
-        { header: "Action"},
     ];
 
     const data = [

@@ -16,7 +16,7 @@ export default function barangKeluar() {
     { header: "No", accessor: "no" },
     { header: "Nama User", accessor: "user" },
     { header: "Kode Keluar", accessor: "kode" },
-    { header: "Nama Barang", accessor: "nama" },
+    { header: "Nama Barang", accessor: "barang" },
     { header: "Nama Supplier", accessor: "supplier" },
     { header: "Stok Keluar", accessor: "stok" },
     { header: "Tanggal Keluar", accessor: "tanggal" },
