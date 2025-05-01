@@ -4,31 +4,19 @@ import { useRouter } from 'next/navigation';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 
-export default function CustomTable(param) {
-    const {
-        columns = [],
-        data = [],
-        showAddButton = true,
-        showControls = true,
-        showWeekFilter = true,
-        showPagination = true,
-        showSearch = true,
-        showActions = true,
-        showDetailsOnly = false,
-        entriesOptions = [5, 10, 20],
-    } = param;
-
-    const router = useRouter();
+export default function Table({
+    columns = [],
+    data = [],
+    showAddButton = true,
+    onAdd = () => {},
+    showControls = true,
+    showWeekFilter = true,
+    showPagination = true,
+    showSearch = true,
+    entriesOptions = [5, 10, 25],
+    defaultEntries = 5,
+}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [entries, setEntries] = useState(entriesOptions[0]); // FIX: defaultEntries undefined → pakai default dari entriesOptions
     const [page, setPage] = useState(1);
@@ -122,102 +110,97 @@ export default function CustomTable(param) {
                 </div>
             )}
 
-            <div className="overflow-x-auto">
-                <table className="table w-full text-black border border-gray-200">
-                    <thead className="bg-blue-200 text-black border-b border-gray-200">
-                    <tr>
-                        {columns.map((col, index) => (
-                            <th key={index} className="py-2 px-4 border-r border-gray-200">
-                                {col.header}
-                            </th>
-                        ))}
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table
+          className="table w-full text-black"
+          style={{ border: '1px solid var(--background, #EAEAEA)' }}
+        >
+          <thead
+            style={{
+              backgroundColor: 'var(--color-secondary, #B3D8F1)',
+              borderBottom: '1px solid var(--background, #EAEAEA)',
+            }}
+            className="text-black"
+          >
+            <tr>
+              {columns.map((col, index) => (
+                <th
+                  key={index}
+                  className="py-2 px-4"
+                  style={{ borderRight: '1px solid var(--background, #EAEAEA)' }}
+                >
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {displayedData.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {columns.map((col, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className="py-2 px-4"
+                    style={{
+                      borderTop: '1px solid var(--background, #EAEAEA)',
+                      borderRight: '1px solid var(--background, #EAEAEA)',
+                    }}
+                  >
+                    {col.accessor === 'no'
+                      ? startIndex + rowIndex + 1
+                      : col.accessor
+                      ? row[col.accessor]
+                      : (
 
-                        {showActions && (
-                            <th className="py-2 px-4 border-r border-gray-200">Action</th>
-                        )}
-                    </tr>
-                </thead>
-                    <tbody className="bg-white">
-                        {displayedData.map((row, rowIndex) => (
-                            <tr key={rowIndex}>
-                                {columns.map((col, colIndex) => (
-                                    <td key={colIndex} className="py-2 px-4 border-t border-r border-gray-200">
-                                        {col.accessor === 'no'
-                                            ? startIndex + rowIndex + 1
-                                            : row[col.accessor]}
-                                    </td>
-                                ))}
-                                <td className="py-2 px-4 border-t border-r border-gray-200">
-                                <div className="flex gap-2">
-                                    {showDetailsOnly ? (
-                                    <button
-                                        className="btn btn-sm text-black bg-blue-200 font-normal"
-                                        onClick={() => router.push(`/detail-user/${row.id}`)}
-                                    >
-                                        Detail
-                                    </button>
-                                    ) : (
-                                    <>
-                                        <button
-                                        className="btn btn-sm text-white bg-red-500 font-normal"
-                                        onClick={() => handleEdit(row)}
-                                        >
-                                        Edit
-                                        </button>
-                                        <button
-                                        className="btn btn-sm text-black bg-blue-300 font-normal"
-                                        onClick={() => handleDelete(row)}
-                                        >
-                                        Delete
-                                        </button>
-                                    </>
-                                    )}
-                                </div>
-                                </td>
-
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            {showPagination && (
-                <div className="flex justify-between items-center mt-4 text-sm">
-                    <p>
-                        Showing {startIndex + 1} to {Math.min(startIndex + entries, filteredData.length)} of {filteredData.length} entries
-                    </p>
-                    <div className="join">
+                    <div className="flex gap-2">
                         <button
-                            onClick={() => setPage(page - 1)}
-                            disabled={page === 1}
-                            className="join-item btn btn-sm"
+                            className="btn btn-sm text-white"
+                            style={{ backgroundColor: '#D72F32' }}
                         >
-                            Previous
+                            Edit
                         </button>
-                        <button className="join-item btn btn-sm btn-primary">{page}</button>
                         <button
-                            onClick={() => setPage(page + 1)}
-                            disabled={page === totalPages}
-                            className="join-item btn btn-sm"
+                            className="btn btn-sm text-black"
+                            style={{ backgroundColor: '#B3D8F1' }}
                         >
-                            Next
+                            Delete
                         </button>
                     </div>
-                </div>
-                
-            )}
+                      )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-            {/* MODAL */}
-            <EditModal isOpen={showEdit} onClose={() => setShowEdit(false)} user={selectedUser} />
-            <DeleteModal
-                isOpen={showDelete}
-                onClose={() => setShowDelete(false)}
-                user={selectedUser}
-                onDelete={(user) => {
-                    console.log("Deleting", user);
-                    setShowDelete(false);
-                }}
-            />
+      {/* Footer Pagination */}
+      {showPagination && (
+        <div className="flex justify-between items-center mt-4 text-sm">
+          <p>
+            Showing {startIndex + 1} to {Math.min(startIndex + entries, filteredData.length)} of {filteredData.length} entries
+          </p>
+          <div className="join">
+            <button
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+              className="join-item btn btn-sm"
+            >
+              Previous
+            </button>
+            <button className="join-item btn btn-sm btn-primary">{page}</button>
+            <button
+              onClick={() => setPage(page + 1)}
+              disabled={page === totalPages}
+              className="join-item btn btn-sm"
+            >
+              Next
+            </button>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 }
