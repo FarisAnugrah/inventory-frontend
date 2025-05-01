@@ -24,6 +24,7 @@ export default function CustomTable(param) {
         showPagination = true,
         showSearch = true,
         showActions = true,
+        showDetailsOnly = false,
         entriesOptions = [5, 10, 20],
     } = param;
 
@@ -130,6 +131,7 @@ export default function CustomTable(param) {
                                 {col.header}
                             </th>
                         ))}
+
                         {showActions && (
                             <th className="py-2 px-4 border-r border-gray-200">Action</th>
                         )}
@@ -146,21 +148,35 @@ export default function CustomTable(param) {
                                     </td>
                                 ))}
                                 <td className="py-2 px-4 border-t border-r border-gray-200">
-                                    <div className="flex gap-2">
+
+                                <div className="flex gap-2">
+                                    {showDetailsOnly ? (
+                                    <button
+                                        className="btn btn-sm text-black bg-blue-200 font-normal"
+                                        onClick={() => router.push(`/detail-user/${row.id}`)}
+                                    >
+                                        Detail
+                                    </button>
+                                    ) : (
+                                    <>
                                         <button
-                                            className="btn btn-sm text-white bg-red-500"
-                                            onClick={() => handleEdit(row)}
+                                        className="btn btn-sm text-white bg-red-500 font-normal"
+                                        onClick={() => handleEdit(row)}
                                         >
-                                            Edit
+                                        Edit
                                         </button>
                                         <button
-                                            className="btn btn-sm text-black bg-blue-300"
-                                            onClick={() => handleDelete(row)}
+                                        className="btn btn-sm text-black bg-blue-300 font-normal"
+                                        onClick={() => handleDelete(row)}
                                         >
-                                            Delete
+                                        Delete
                                         </button>
-                                    </div>
+                                    </>
+                                    )}
+                                </div>
                                 </td>
+
+
                             </tr>
                         ))}
                     </tbody>
@@ -190,6 +206,7 @@ export default function CustomTable(param) {
                         </button>
                     </div>
                 </div>
+                
             )}
 
             {/* MODAL */}
