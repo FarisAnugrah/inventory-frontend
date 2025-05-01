@@ -151,21 +151,21 @@ export default function CustomTable(param) {
                                 <div className="flex gap-2">
                                     {showDetailsOnly ? (
                                     <button
-                                        className="btn btn-sm text-green-600 bg-green-100"
+                                        className="btn btn-sm text-black bg-blue-200 font-normal"
                                         onClick={() => router.push(`/detail-user/${row.id}`)}
                                     >
-                                        Details
+                                        Detail
                                     </button>
                                     ) : (
                                     <>
                                         <button
-                                        className="btn btn-sm text-white bg-red-500"
+                                        className="btn btn-sm text-white bg-red-500 font-normal"
                                         onClick={() => handleEdit(row)}
                                         >
                                         Edit
                                         </button>
                                         <button
-                                        className="btn btn-sm text-black bg-blue-300"
+                                        className="btn btn-sm text-black bg-blue-300 font-normal"
                                         onClick={() => handleDelete(row)}
                                         >
                                         Delete
