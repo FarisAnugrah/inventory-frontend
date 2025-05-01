@@ -11,6 +11,8 @@ export default function pengelola() {
     const data = [
         { no: 1, jenis: "Makanan", barang: "Indomie" },
         { no: 2, jenis: "Minuman", barang: "Le Mineral" },
+        { no: 3, jenis: "Elektronik", barang: "TV" },
+        { no: 4, jenis: "Pakaian", barang: "Kemeja" },
     ];
     
 
