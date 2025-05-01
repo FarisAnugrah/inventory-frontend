@@ -130,6 +130,7 @@ export default function CustomTable(param) {
                                 {col.header}
                             </th>
                         ))}
+                        
                         {showActions && (
                             <th className="py-2 px-4 border-r border-gray-200">Action</th>
                         )}
@@ -190,6 +191,7 @@ export default function CustomTable(param) {
                         </button>
                     </div>
                 </div>
+                
             )}
 
             {/* MODAL */}

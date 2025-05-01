@@ -1,6 +1,6 @@
 import Table from '@/components/Table';
 
-export default function barangKeluar() {
+export default function barangMasuk() {
     
   <div className="flex items-center gap-2">
               <span>Show</span>
