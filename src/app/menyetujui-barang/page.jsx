@@ -37,7 +37,16 @@ export default function MenyetujuiBarang() {
 
   return (
     <div className="p-6">
-      <Table columns={columns} data={data} />
+      <Table
+        columns={columns}
+        data={data}
+        showAddButton={true}
+        showSearch={true}
+        showPagination={true}
+        showWeekFilter={false}
+        showControls={true}
+        showDetailsOnly={true} // Ensure this prop is passed correctly
+      />
       {selectedItem && (
         <DetailModal
           item={selectedItem}
@@ -47,19 +56,3 @@ export default function MenyetujuiBarang() {
     </div>
   );
 }
-
-return (
-  <div className="p-6">
-      <Table
-      columns={columns}
-      data={data}
-      showAddButton={true}
-      showSearch={true}
-      showPagination={true}
-      showWeekFilter={false}
-      showControls={true}
-      showDetailsOnly={true}
-      />
-
-  </div>
-  );
