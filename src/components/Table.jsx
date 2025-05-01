@@ -1,5 +1,9 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
+
 
 export default function Table({
     columns = [],
