@@ -37,8 +37,6 @@ export default function LayoutProvider({ children }) {
     ],
     manager: [
       { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/manager" },
-      { icon: <Users size={20} />, label: "User Management", href: "/pengelola-pengguna/manager" },
-      { icon: <Package size={20} />, label: "Pengelola Barang", href: "/pengelola-kategori/manager" },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/manager" },
       { icon: <Download size={20} />, label: "Barang Masuk", href: "/barangMasuk/manager" },
       { icon: <Upload size={20} />, label: "Barang Keluar", href: "/barangKeluar/manager" },
@@ -46,7 +44,7 @@ export default function LayoutProvider({ children }) {
   };
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("role") || "admin"; // fallback ke admin
+    const storedRole =  "manager"; 
     setRole(storedRole);
     setMenus(menuByRoles[storedRole] || []);
   }, []);
