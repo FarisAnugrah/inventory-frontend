@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 export default function LayoutProvider({ children }) {
   const pathname = usePathname();
-  const [role, setRole] = useState("admin"); // default sementara
+  const [role, setRole] = useState("admin");
   const [menus, setMenus] = useState([]);
 
   const menuByRoles = {
@@ -30,10 +30,10 @@ export default function LayoutProvider({ children }) {
     ],
     staff: [
       { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/staff" },
-      { icon: <Car size={20} />, label: "Mutasi Barang", href: "/mutasiBarang" },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
       { icon: <Download size={20} />, label: "Barang Masuk", href: "/barangMasuk/staff" },
       { icon: <Upload size={20} />, label: "Barang Keluar", href: "/barangKeluar/staff" },
+      { icon: <Car size={20} />, label: "Mutasi Barang", href: "/mutasiBarang" },
     ],
     manager: [
       { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/admin" },
@@ -45,8 +45,26 @@ export default function LayoutProvider({ children }) {
     ],
   };
 
+  const getPageTitle = (path) => {
+    const titles = {
+      "/dashboard/admin": "Dashboard",
+      "/dashboard/staff": "Dashboard",
+      "/dashboard/manager": "Dashboard",
+      "/pengelola-pengguna": "Manajemen Pengguna",
+      "/pengelola-kategori": "Pengelola Barang",
+      "/stok/admin": "Stok Barang",
+      "/stok/staff": "Stok Barang",
+      "/barangMasuk/admin": "Barang Masuk",
+      "/barangMasuk/staff": "Barang Masuk",
+      "/barangKeluar/admin": "Barang Keluar",
+      "/barangKeluar/staff": "Barang Keluar",
+      "/mutasiBarang": "Mutasi Barang Antar Gudang",
+    };
+    return titles[path] || "Halaman";
+  };
+
   useEffect(() => {
-    const storedRole = localStorage.getItem("role") || "admin"; // fallback ke admin
+    const storedRole = "staff"; 
     setRole(storedRole);
     setMenus(menuByRoles[storedRole] || []);
   }, []);
@@ -55,7 +73,8 @@ export default function LayoutProvider({ children }) {
     <>
       {!pathname.includes("/auth") ? (
         <div className="w-full flex overflow-hidden">
-          <aside className="h-screen bg-primary w-64 p-4">
+          {/* Sidebar */}
+          <aside className="h-screen bg-primary w-64 p-4 shrink-0">
             <div className="flex items-center gap-2 mb-10">
               <Image
                 src="/assets/images/box.png"
@@ -74,8 +93,7 @@ export default function LayoutProvider({ children }) {
                   className={`flex items-center justify-between text-sm p-2 rounded-lg
                     ${pathname === item.href
                       ? "text-[#414245]"
-                      : "text-[#FFFFFF] hover:text-gray-600"}
-                  `}
+                      : "text-[#FFFFFF] hover:text-gray-600"}`}
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -98,20 +116,35 @@ export default function LayoutProvider({ children }) {
             </nav>
           </aside>
 
-          <div className="flex flex-col h-screen w-full">
-            <header className="flex justify-end bg-blue-200 text-black p-6 font-semibold gap-3 items-center">
-              Tiara Sofa
-              <img
-                src="/assets/images/profiletest.jpg"
-                alt="profile"
-                width={40}
-                height={40}
-                className="rounded-full border-1 border-white"
-              />
+          {/* Konten */}
+          <div className="flex flex-col h-screen w-full overflow-hidden">
+            <header className="h-20 flex justify-between bg-blue-200 text-black px-6 py-4 font-semibold items-center">
+              <h1 className="text-xl">{getPageTitle(pathname)}</h1>
+
+              <div className="relative group cursor-pointer">
+                <img
+                  src="/assets/images/profiletest.jpg"
+                  alt="profile"
+                  width={40}
+                  height={40}
+                  className="rounded-full border border-white"
+                />
+                <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                  <button
+                    onClick={() => {
+                      // logika logout sesungguhnya bisa tambahkan di sini
+                      console.log("Logout clicked");
+                    }}
+                    className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
             </header>
 
-            <main className="flex-1 bg-[var(-background)] p-6 overflow-auto">
-              {children}
+            <main className="flex-1 bg-[var(--background)] p-6 overflow-auto">
+              <div className="w-full overflow-x-auto">{children}</div>
             </main>
           </div>
         </div>
