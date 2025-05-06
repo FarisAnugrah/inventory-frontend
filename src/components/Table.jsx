@@ -4,21 +4,12 @@ import { useRouter } from 'next/navigation';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-
 export default function CustomTable(param) {
     const {
         columns = [],
         data = [],
         showAddButton = true,
+        showAddMutasi = true,
         showControls = true,
         showWeekFilter = true,
         showPagination = true,
@@ -31,7 +22,7 @@ export default function CustomTable(param) {
 
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
-    const [entries, setEntries] = useState(entriesOptions[0]); // FIX: defaultEntries undefined → pakai default dari entriesOptions
+    const [entries, setEntries] = useState(entriesOptions?.[0] || 5);
     const [page, setPage] = useState(1);
     const [selectedWeek, setSelectedWeek] = useState('');
     const [showEdit, setShowEdit] = useState(false);
@@ -50,10 +41,10 @@ export default function CustomTable(param) {
 
     const isDateInWeek = (dateStr, weekStr) => {
         const date = new Date(dateStr);
-        const inputWeek = new Date(`${weekStr}-1`);
-        const endOfWeek = new Date(inputWeek);
-        endOfWeek.setDate(inputWeek.getDate() + 6);
-        return date >= inputWeek && date <= endOfWeek;
+        const weekStart = new Date(`${weekStr}-1`);
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekStart.getDate() + 6);
+        return date >= weekStart && date <= weekEnd;
     };
 
     const filteredData = data.filter(row => {
@@ -68,12 +59,17 @@ export default function CustomTable(param) {
     const startIndex = (page - 1) * entries;
     const displayedData = filteredData.slice(startIndex, startIndex + entries);
 
+    const shouldShowActionColumn = showActions || showDetailsOnly;
+
     return (
         <div className="w-full">
             {showControls && (
                 <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
                     {showAddButton && (
                         <button onClick={handleAdd} className="btn btn-primary">Tambah</button>
+                    )}
+                    {showAddMutasi && (
+                        <button onClick={handleAdd} className="btn btn-primary">Tambah Mutasi</button>
                     )}
                     {showWeekFilter && (
                         <div className="flex flex-col">
@@ -90,17 +86,21 @@ export default function CustomTable(param) {
                         </div>
                     )}
                     {showSearch && (
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm">Search:</span>
+                        <div className="flex items-center gap-2 border rounded input input-bordered input-sm px-2 w-25">
+                            <svg className="h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </g>
+                            </svg>
                             <input
                                 type="text"
-                                className="input input-bordered input-sm"
+                                className="w-full bg-transparent outline-none text-sm"
                                 value={searchTerm}
                                 onChange={e => {
                                     setSearchTerm(e.target.value);
                                     setPage(1);
                                 }}
-                                placeholder="Cari data..."
                             />
                         </div>
                     )}
@@ -126,18 +126,17 @@ export default function CustomTable(param) {
             <div className="overflow-x-auto">
                 <table className="table w-full text-black border border-gray-200">
                     <thead className="bg-blue-200 text-black border-b border-gray-200">
-                    <tr>
-                        {columns.map((col, index) => (
-                            <th key={index} className="py-2 px-4 border-r border-gray-200">
-                                {col.header}
-                            </th>
-                        ))}
-
-                        {showActions && (
-                            <th className="py-2 px-4 border-r border-gray-200">Action</th>
-                        )}
-                    </tr>
-                </thead>
+                        <tr>
+                            {columns.map((col, index) => (
+                                <th key={index} className="py-2 px-4 border-r border-gray-200">
+                                    {col.header}
+                                </th>
+                            ))}
+                            {shouldShowActionColumn && (
+                                <th className="py-2 px-4 border-r border-gray-200">Action</th>
+                            )}
+                        </tr>
+                    </thead>
                     <tbody className="bg-white">
                         {displayedData.map((row, rowIndex) => (
                             <tr key={rowIndex}>
@@ -145,39 +144,43 @@ export default function CustomTable(param) {
                                     <td key={colIndex} className="py-2 px-4 border-t border-r border-gray-200">
                                         {col.accessor === 'no'
                                             ? startIndex + rowIndex + 1
-                                            : row[col.accessor]}
+                                            : row[col.accessor] ?? '-'}
                                     </td>
                                 ))}
-                                <td className="py-2 px-4 border-t border-r border-gray-200">
 
-                                <div className="flex gap-2">
-                                {showDetailsOnly ? (
-                                    <button
-                                        className="btn btn-sm text-black bg-blue-200 font-normal"
-                                        onClick={() => onDetailClick(row)} // ✅ Panggil fungsi dari props
-                                         >
-                                        Detail
-                                        </button>
-                                        ) : (
-
-                                    <>
-                                        <button
-                                        className="btn btn-sm text-white bg-red-500 font-normal"
-                                        onClick={() => handleEdit(row)}
-                                        >
-                                        Edit
-                                        </button>
-                                        <button
-                                        className="btn btn-sm text-black bg-blue-300 font-normal"
-                                        onClick={() => handleDelete(row)}
-                                        >
-                                        Delete
-                                        </button>
-                                    </>
-                                    )}
-                                </div>
-                                </td>
-
+                                {shouldShowActionColumn && (
+                                    <td className="py-2 px-4 border-t border-r border-gray-200">
+                                        <div className="flex gap-2">
+                                            {showDetailsOnly ? (
+                                                <button
+                                                    className="btn btn-sm text-black bg-blue-200 font-normal"
+                                                    onClick={() => router.push(`/detail-user/${row.id}`)}
+                                                >
+                                                    Detail
+                                                </button>
+                                            ) : (
+                                                <>
+                                                    {showActions && (
+                                                        <>
+                                                            <button
+                                                                className="btn btn-sm text-white bg-red-500 font-normal"
+                                                                onClick={() => handleEdit(row)}
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-sm text-black bg-blue-300 font-normal"
+                                                                onClick={() => handleDelete(row)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </>
+                                            )}
+                                        </div>
+                                    </td>
+                                )}
 
                             </tr>
                         ))}
@@ -208,7 +211,6 @@ export default function CustomTable(param) {
                         </button>
                     </div>
                 </div>
-                
             )}
 
             {/* MODAL */}
