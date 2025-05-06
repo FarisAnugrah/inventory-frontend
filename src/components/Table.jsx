@@ -85,17 +85,21 @@ export default function CustomTable(param) {
                         </div>
                     )}
                     {showSearch && (
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm">Search:</span>
+                        <div className="flex items-center gap-2 border rounded input input-bordered input-sm px-2 w-25">
+                            <svg className="h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </g>
+                            </svg>
                             <input
                                 type="text"
-                                className="input input-bordered input-sm"
+                                className="w-full bg-transparent outline-none text-sm"
                                 value={searchTerm}
                                 onChange={e => {
                                     setSearchTerm(e.target.value);
                                     setPage(1);
                                 }}
-                                placeholder="Cari data..."
                             />
                         </div>
                     )}
