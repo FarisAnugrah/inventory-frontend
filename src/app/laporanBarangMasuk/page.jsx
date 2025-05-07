@@ -39,6 +39,7 @@ return (
           showPagination={true}
           showWeekFilter={false}
           showControls={true}
+          showAddMutasi={false}
           />
   
       </div>

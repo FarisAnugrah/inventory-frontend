@@ -35,6 +35,8 @@ export default function MenyetujuiBarang() {
         showWeekFilter={false}
         showControls={true}
         showDetailsOnly={true}
+        showAddMutasi={false}
+
         onDetailClick={(item) => setSelectedItem(item)}
          // Ensure this prop is passed correctly
       />

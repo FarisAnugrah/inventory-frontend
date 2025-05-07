@@ -32,12 +32,13 @@ export default function stok() {
         <Table
         columns={columns}
         data={data}
-        showAddButton={true}
+        showAddButton={false}
         showSearch={true}
         showPagination={true}
         showWeekFilter={false}
         showControls={true}
         showActions = {true}
+        showAddMutasi={false}
         />
       </div>
     );

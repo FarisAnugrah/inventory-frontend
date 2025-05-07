@@ -42,6 +42,7 @@ export default function barangKeluar() {
           showPagination={true}
           showWeekFilter={false}
           showControls={true}
+          showAddMutasi={false}
           />
   
       </div>

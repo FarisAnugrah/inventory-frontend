@@ -8,6 +8,7 @@ import {
   Download,
   Upload,
   Car,
+  PackageCheck,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -38,8 +39,10 @@ export default function LayoutProvider({ children }) {
     manager: [
       { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/manager" },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/manager" },
-      { icon: <Download size={20} />, label: "Barang Masuk", href: "/barangMasuk/manager" },
-      { icon: <Upload size={20} />, label: "Barang Keluar", href: "/barangKeluar/manager" },
+      { icon: <Download size={20} />, label: "Barang Masuk", href: "/laporanBarangMasuk" },
+      { icon: <Upload size={20} />, label: "Barang Keluar", href: "/laporanBarangKeluar" },
+      { icon: <PackageCheck size={20} />, label: "Approval Barang Keluar", href: "/menyetujui-barang" },
+
     ],
   };
 
@@ -57,8 +60,11 @@ export default function LayoutProvider({ children }) {
       "/barangKeluar/admin": "Barang Keluar",
       "/barangKeluar/staff": "Barang Keluar",
       "/mutasiBarang": "Mutasi Barang Antar Gudang",
+      "/laporanBarangMasuk" : "Laporan Barang Masuk",
+      "/laporanBarangKeluar" : "Laporan Barang Keluar",
+      "/menyetujui-barang" : "Menyetujui Barang Keluar",
     };
-    return titles[path] || "Halaman";
+    return titles[path] || "Stok Barang";
   };
 
   useEffect(() => {
