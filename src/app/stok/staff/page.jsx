@@ -31,7 +31,8 @@ export default function stok() {
   
     
     <div className="p-6">
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data}
+      showAddMutasi={false} />
             
     </div>
   );

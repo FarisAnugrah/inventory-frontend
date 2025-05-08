@@ -14,6 +14,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function LayoutProvider({ children }) {
   const pathname = usePathname();
@@ -22,26 +23,84 @@ export default function LayoutProvider({ children }) {
 
   const menuByRoles = {
     admin: [
-      { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/admin" },
-      { icon: <Users size={20} />, label: "User Management", href: "/pengelola-pengguna" },
-      { icon: <Package size={20} />, label: "Pengelola Barang", href: "/pengelola-kategori" },
+      {
+        icon: <Home size={20} />,
+        label: "Dashboard",
+        href: "/dashboard/admin",
+      },
+      {
+        icon: <Users size={20} />,
+        label: "User Management",
+        href: "/pengelola-pengguna",
+      },
+      {
+        icon: <Package size={20} />,
+        label: "Pengelola Barang",
+        href: "/pengelola-kategori",
+      },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/admin" },
-      { icon: <Download size={20} />, label: "Barang Masuk", href: "/barangMasuk/admin" },
-      { icon: <Upload size={20} />, label: "Barang Keluar", href: "/barangKeluar/admin" },
+      {
+        icon: <Download size={20} />,
+        label: "Barang Masuk",
+        href: "/barangMasuk/admin",
+      },
+      {
+        icon: <Upload size={20} />,
+        label: "Barang Keluar",
+        href: "/barangKeluar/admin",
+      },
     ],
     staff: [
-      { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/staff" },
+      {
+        icon: <Home size={20} />,
+        label: "Dashboard",
+        href: "/dashboard/staff",
+      },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
-      { icon: <Download size={20} />, label: "Barang Masuk", href: "/barangMasuk/staff" },
-      { icon: <Upload size={20} />, label: "Barang Keluar", href: "/barangKeluar/staff" },
-      { icon: <Car size={20} />, label: "Mutasi Barang", href: "/mutasiBarang" },
+      {
+        icon: <Download size={20} />,
+        label: "Barang Masuk",
+        href: "/barangMasuk/staff",
+      },
+      {
+        icon: <Upload size={20} />,
+        label: "Barang Keluar",
+        href: "/barangKeluar/staff",
+      },
+      {
+        icon: <Car size={20} />,
+        label: "Mutasi Barang",
+        href: "/mutasiBarang",
+      },
     ],
     manager: [
-      { icon: <Home size={20} />, label: "Dashboard", href: "/dashboard/manager" },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/manager" },
-      { icon: <Download size={20} />, label: "Barang Masuk", href: "/laporanBarangMasuk" },
-      { icon: <Upload size={20} />, label: "Barang Keluar", href: "/laporanBarangKeluar" },
-      { icon: <PackageCheck size={20} />, label: "Approval Barang Keluar", href: "/menyetujui-barang" },
+
+      {
+        icon: <Home size={20} />,
+        label: "Dashboard",
+        href: "/dashboard/admin",
+      },
+      {
+        icon: <Users size={20} />,
+        label: "User Management",
+        href: "/pengelola-pengguna",
+      },
+      {
+        icon: <Package size={20} />,
+        label: "Pengelola Barang",
+        href: "/pengelola-kategori",
+      },
+      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/admin" },
+      {
+        icon: <Download size={20} />,
+        label: "Barang Masuk",
+        href: "/barangMasuk/admin",
+      },
+      {
+        icon: <Upload size={20} />,
+        label: "Barang Keluar",
+        href: "/barangKeluar/admin",
+      },
 
     ],
   };
@@ -68,6 +127,7 @@ export default function LayoutProvider({ children }) {
   };
 
   useEffect(() => {
+
     const storedRole =  "manager"; 
 
     setRole(storedRole);
@@ -75,7 +135,7 @@ export default function LayoutProvider({ children }) {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       {!pathname.includes("/auth") ? (
         <div className="w-full flex overflow-hidden">
           {/* Sidebar */}
@@ -96,14 +156,18 @@ export default function LayoutProvider({ children }) {
                   key={index}
                   href={item.href}
                   className={`flex items-center justify-between text-sm p-2 rounded-lg
-                    ${pathname === item.href
-                      ? "text-[#414245]"
-                      : "text-[#FFFFFF] hover:text-gray-600"}`}
+                    ${
+                      pathname === item.href
+                        ? "text-[#414245]"
+                        : "text-[#FFFFFF] hover:text-gray-600"
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`${
-                        pathname === item.href ? "text-[#414245]" : "text-[#B3D8F1]"
+                        pathname === item.href
+                          ? "text-[#414245]"
+                          : "text-[#B3D8F1]"
                       }`}
                     >
                       {item.icon}
@@ -156,6 +220,6 @@ export default function LayoutProvider({ children }) {
       ) : (
         <div>{children}</div>
       )}
-    </>
+    </AuthProvider>
   );
 }
