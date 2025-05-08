@@ -38,7 +38,7 @@ export default function MenyetujuiBarang() {
         showAddMutasi={false}
 
         onDetailClick={(item) => setSelectedItem(item)}
-         // Ensure this prop is passed correctly
+        
       />
       {selectedItem && (
         <DetailModal

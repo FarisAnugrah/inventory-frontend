@@ -1,4 +1,4 @@
-import { X } from "lucide-react"; // Pastikan kamu install lucide-react: npm install lucide-react
+import { X } from "lucide-react"; 
 
 export default function DetailModal({ item, onClose }) {
   return (
@@ -60,3 +60,5 @@ export default function DetailModal({ item, onClose }) {
     </div>
   );
 }
+
+

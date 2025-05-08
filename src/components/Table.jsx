@@ -150,37 +150,38 @@ export default function CustomTable(param) {
 
                                 {shouldShowActionColumn && (
                                     <td className="py-2 px-4 border-t border-r border-gray-200">
-                                        <div className="flex gap-2">
-                                            {showDetailsOnly ? (
-                                                <button
-                                                    className="btn btn-sm text-black bg-blue-200 font-normal"
-                                                    onClick={() => router.push(`/detail-user/${row.id}`)}
-                                                >
-                                                    Detail
-                                                </button>
-                                            ) : (
-                                                <>
-                                                    {showActions && (
-                                                        <>
-                                                            <button
-                                                                className="btn btn-sm text-white bg-red-500 font-normal"
-                                                                onClick={() => handleEdit(row)}
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                            <button
-                                                                className="btn btn-sm text-black bg-blue-300 font-normal"
-                                                                onClick={() => handleDelete(row)}
-                                                            >
-                                                                Delete
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </>
-                                            )}
-                                        </div>
-                                    </td>
-                                )}
+                                    <div className="flex gap-2">
+                                {showDetailsOnly ? (
+                                <button
+                                className="btn btn-sm text-black bg-blue-200 font-normal"
+                                onClick={() => onDetailClick(row)} 
+                                >
+                                Detail
+                                </button>
+                            ) : (
+                            <>
+                            {showActions && (
+                            <>
+                            <button
+                            className="btn btn-sm text-white bg-red-500 font-normal"
+                            onClick={() => handleEdit(row)}
+                            >
+                            Edit
+                            </button>
+                            <button
+                            className="btn btn-sm text-black bg-blue-300 font-normal"
+                            onClick={() => handleDelete(row)}
+                            >
+                            Delete
+                            </button>
+                        </>
+                    )}
+                </>
+            )}
+    </div>
+  </td>
+)}
+
 
                             </tr>
                         ))}
