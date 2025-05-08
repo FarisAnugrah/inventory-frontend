@@ -1,10 +1,41 @@
+"use client";
+
+import { useAuth } from "@/context/AuthContext";
+import { authRequest } from "@/utility/auth";
+import { consumeDynamicAccess } from "next/dist/server/app-render/dynamic-rendering";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    isAuthenticated && router.push("/");
+  }, [isAuthenticated]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await authRequest("login", { email, password });
+    if (response?.token) {
+      login(response.token);
+    } else {
+      alert(response?.meta?.message);
+    }
+  };
+
   return (
     <>
       <div className="w-full h-screen flex items-center justify-center bg-white">
-        <form className="w-3xl rounded-xl border-2 bg-white/70 shadow border-gray-400 flex flex-col gap-4 px-4 py-4 justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-3xl rounded-xl border-2 bg-white/70 shadow border-gray-400 flex flex-col gap-4 px-4 py-4 justify-center items-center"
+        >
           <Image
             src={"/assets/images/logo.png"}
             width={200}
@@ -30,7 +61,13 @@ export default function Login() {
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
               </g>
             </svg>
-            <input type="email" placeholder="mail@site.com" required />
+            <input
+              type="email"
+              placeholder="mail@site.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </label>
           <div className="validator-hint hidden">Enter valid email address</div>
 
@@ -56,8 +93,9 @@ export default function Login() {
               required
               placeholder="Password"
               minLength="8"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              title="Must be more than 8 characters"
             />
           </label>
           <p className="validator-hint hidden">
