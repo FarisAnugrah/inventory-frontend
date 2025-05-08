@@ -14,8 +14,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LayoutProvider({ children }) {
+  const { logout } = useAuth();
   const pathname = usePathname();
   const [role, setRole] = useState("admin");
   const [menus, setMenus] = useState([]);
@@ -191,15 +193,11 @@ export default function LayoutProvider({ children }) {
                   className="rounded-full border border-white"
                 />
                 <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                  <button
-                    onClick={() => {
-                      // logika logout sesungguhnya bisa tambahkan di sini
-                      console.log("Logout clicked");
-                    }}
-                    className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
-                  >
-                    Logout
-                  </button>
+                <button
+                  onClick={logout}
+                  className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
+                >Logout
+                </button>
                 </div>
               </div>
             </header>
