@@ -201,7 +201,6 @@ export default function LayoutProvider({ children }) {
                 </div>
               </div>
             </header>
-
             <main className="flex-1 bg-[var(--background)] p-6 overflow-auto">
               <div className="w-full overflow-x-auto">{children}</div>
             </main>
