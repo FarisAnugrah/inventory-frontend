@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     localStorage.setItem("access_token", token);
     setIsAuthenticated(true);
-    router.push("/");
+    router.push("/dahsboard/staff");
   };
 
   const logout = () => {
