@@ -2,15 +2,6 @@ import Table from '@/components/Table';
 
 export default function barangKeluar() {
     
-  <div className="flex items-center gap-2">
-              <span>Show</span>
-              <select className="select select-bordered select-sm w-20">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
-              <span>entries</span>
-            </div>
 
   const columns = [
     { header: "No", accessor: "no" },
@@ -39,6 +30,7 @@ export default function barangKeluar() {
           data={data}
           showAddButton={false}
           showSearch={true}
+          showActions={false}
           showPagination={true}
           showWeekFilter={false}
           showControls={true}
