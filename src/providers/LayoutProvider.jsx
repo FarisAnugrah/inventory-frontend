@@ -9,6 +9,7 @@ import {
   Upload,
   Car,
   PackageCheck,
+  MapPinHouse,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -98,6 +99,11 @@ export default function LayoutProvider({ children }) {
         label: "Approval Barang Keluar",
         href: "/menyetujui-barang",
       },
+      {
+        icon: <MapPinHouse size={20} />,
+        label: "Pengelola Gudang",
+        href: "/pengelola-gudang/admin",
+      },
     ],
   };
 
@@ -118,13 +124,14 @@ export default function LayoutProvider({ children }) {
       "/laporanBarangMasuk" : "Laporan Barang Masuk",
       "/laporanBarangKeluar" : "Laporan Barang Keluar",
       "/menyetujui-barang" : "Menyetujui Barang Keluar",
+      "/pengelola-gudang/admin" : "Pengelola Gudang",
     };
     return titles[path] || "Stok Barang";
   };
 
   useEffect(() => {
 
-    const storedRole =  "manager"; 
+    const storedRole =  "admin"; 
 
     setRole(storedRole);
     setMenus(menuByRoles[storedRole] || []);
