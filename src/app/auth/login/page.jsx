@@ -15,7 +15,7 @@ export default function Login() {
   const { login, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    isAuthenticated && router.push("/");
+    isAuthenticated && router.push("/dashboard/staff");
   }, [isAuthenticated]);
 
   const handleSubmit = async (e) => {
