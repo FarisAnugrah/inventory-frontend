@@ -21,7 +21,7 @@ export default function pengelola_gudang() {
         columns={columns}
         data={data}
         showAddButton={false}
-        showAddMutasi={true}
+        showAddMutasi={false}
         showSearch={true}
         showPagination={true}
         showWeekFilter={true}
