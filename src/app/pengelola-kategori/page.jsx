@@ -3,15 +3,14 @@ import Table from '@/components/Table';
 export default function pengelola() {
     const columns = [
         { header: "No", accessor: "no" },
-        { header: "Jenis Barang", accessor: "jenis" },
-        { header: "Nama Barang", accessor: "barang" },
+        { header: "Kategori Barang", accessor: "barang" },
     ];
 
     const data = [
-        { no: 1, jenis: "Makanan", barang: "Indomie" },
-        { no: 2, jenis: "Minuman", barang: "Le Mineral" },
-        { no: 3, jenis: "Elektronik", barang: "TV" },
-        { no: 4, jenis: "Pakaian", barang: "Kemeja" },
+        { no: 1, barang: "Makanan"},
+        { no: 2, barang: "Minuman"},
+        { no: 3, barang: "Elektronik"},
+        { no: 4, barang: "Pakaian"},
     ];
     
 
@@ -25,6 +24,9 @@ export default function pengelola() {
         showPagination={true}
         showWeekFilter={false}
         showControls={true}
+        addLink="/tambah-item"
+        editLink="/edit-item"
+        editorComponent={EditItem}
         />
 
     </div>

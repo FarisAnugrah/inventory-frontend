@@ -37,7 +37,7 @@ export default function stok() {
         showPagination={true}
         showWeekFilter={false}
         showControls={true}
-        showActions = {true}
+        showActions = {false}
         showAddMutasi={false}
         />
       </div>

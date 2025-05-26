@@ -7,7 +7,7 @@ import {
   Boxes,
   Download,
   Upload,
-  Car,
+  // Car,
   PackageCheck,
 } from "lucide-react";
 import Image from "next/image";
@@ -37,10 +37,12 @@ export default function LayoutProvider({ children }) {
       },
       {
         icon: <Package size={20} />,
-        label: "Pengelola Barang",
+        label: "Pengelola Kategori",
         href: "/pengelola-kategori",
       },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/admin" },
+      { icon: <Boxes size={20} />,
+        label: "Stok Barang", 
+        href: "/stok/admin" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -58,7 +60,9 @@ export default function LayoutProvider({ children }) {
         label: "Dashboard",
         href: "/dashboard/staff",
       },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
+      { icon: <Boxes size={20} />, 
+        label: "Stok Barang", 
+        href: "/stok/staff" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -69,11 +73,11 @@ export default function LayoutProvider({ children }) {
         label: "Barang Keluar",
         href: "/barangKeluar/staff",
       },
-      {
-        icon: <Car size={20} />,
-        label: "Mutasi Barang",
-        href: "/mutasiBarang",
-      },
+      // {
+      //   icon: <Car size={20} />,
+      //   label: "Mutasi Barang",
+      //   href: "/mutasiBarang",
+      // },
     ],
     manager: [
 
@@ -92,7 +96,9 @@ export default function LayoutProvider({ children }) {
         label: "Barang Keluar",
         href: "/laporanBarangKeluar",
       },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/manager" },
+      { icon: <Boxes size={20} />, 
+        label: "Stok Barang", 
+        href: "/stok/manager" },
       {
         icon: <PackageCheck size={20} />,
         label: "Approval Barang Keluar",
@@ -106,25 +112,25 @@ export default function LayoutProvider({ children }) {
       "/dashboard/admin": "Dashboard",
       "/dashboard/staff": "Dashboard",
       "/dashboard/manager": "Dashboard",
-      "/pengelola-pengguna": "Manajemen Pengguna",
-      "/pengelola-kategori": "Pengelola Barang",
+      "/pengelola-pengguna": "User Management",
+      "/pengelola-kategori": "Pengelola Kategori",
       "/stok/admin": "Stok Barang",
       "/stok/staff": "Stok Barang",
       "/barangMasuk/admin": "Barang Masuk",
       "/barangMasuk/staff": "Barang Masuk",
       "/barangKeluar/admin": "Barang Keluar",
       "/barangKeluar/staff": "Barang Keluar",
-      "/mutasiBarang": "Mutasi Barang Antar Gudang",
+      // "/mutasiBarang": "Mutasi Barang Antar Gudang",
       "/laporanBarangMasuk" : "Laporan Barang Masuk",
       "/laporanBarangKeluar" : "Laporan Barang Keluar",
       "/menyetujui-barang" : "Menyetujui Barang Keluar",
     };
-    return titles[path] || "Stok Barang";
+    return titles[path] || "Dashboard";
   };
 
   useEffect(() => {
 
-    const storedRole =  "manager"; 
+    const storedRole =  "admin"; 
 
     setRole(storedRole);
     setMenus(menuByRoles[storedRole] || []);
@@ -170,7 +176,6 @@ export default function LayoutProvider({ children }) {
                     </div>
                     <span>{item.label}</span>
                   </div>
-
                   {item.count !== undefined && (
                     <span className="bg-red-500 px-2 py-0.5 rounded-full text-xs font-semibold">
                       {item.count}
@@ -185,7 +190,6 @@ export default function LayoutProvider({ children }) {
           <div className="flex flex-col h-screen w-full overflow-hidden">
             <header className="h-20 flex justify-between bg-blue-200 text-black px-6 py-4 font-semibold items-center">
               <h1 className="text-xl">{getPageTitle(pathname)}</h1>
-
               <div className="relative group cursor-pointer">
                 <img
                   src="/assets/images/profiletest.jpg"

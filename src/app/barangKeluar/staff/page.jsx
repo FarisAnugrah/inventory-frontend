@@ -1,16 +1,6 @@
 import Table from '@/components/Table';
 
 export default function barangKeluar() {
-    
-  <div className="flex items-center gap-2">
-              <span>Show</span>
-              <select className="select select-bordered select-sm w-20">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
-              <span>entries</span>
-            </div>
 
   const columns = [
     { header: "No", accessor: "no" },
@@ -30,11 +20,20 @@ export default function barangKeluar() {
 
   ];
   return (
-  
-    
     <div className="p-6">
-      <Table columns={columns} data={data} />
-            
+      <Table
+        columns={columns}
+        data={data}
+        showAddButton={true}
+        showAddMutasi={false}
+        showSearch={true}
+        showPagination={true}
+        showWeekFilter={true}
+        showControls={true}
+        showActions={false}
+        showDetailsOnly={false}
+        addLink="/tambah-keluar"
+      />
     </div>
   );
 }

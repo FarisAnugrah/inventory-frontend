@@ -19,11 +19,15 @@ export default function user() {
       <Table
       columns={columns}
       data={data}
-      showAddButton={true}
       showSearch={true}
+      showAddButton={true}
+      showAddMutasi={false}
       showPagination={true}
       showWeekFilter={false}
       showControls={true}
+      addLink="/tambah-user"
+      linkEdit="/edit-user"
+      editorComponent={EditUser}
       />
     </div>
   );
