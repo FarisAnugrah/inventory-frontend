@@ -26,7 +26,6 @@ export default function pengelola() {
         showControls={true}
         addLink="/tambah-item"
         editLink="/edit-item"
-        editorComponent={EditItem}
         />
 
     </div>
