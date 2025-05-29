@@ -52,6 +52,11 @@ export default function LayoutProvider({ children }) {
         label: "Barang Keluar",
         href: "/barangKeluar/admin",
       },
+      {
+        icon: <MapPinHouse size={20} />,
+        label: "Pengelola Gudang",
+        href: "/pengelola-gudang/admin",
+      },
     ],
     staff: [
       {
@@ -98,11 +103,6 @@ export default function LayoutProvider({ children }) {
         icon: <PackageCheck size={20} />,
         label: "Approval Barang Keluar",
         href: "/menyetujui-barang",
-      },
-      {
-        icon: <MapPinHouse size={20} />,
-        label: "Pengelola Gudang",
-        href: "/pengelola-gudang/admin",
       },
     ],
   };
