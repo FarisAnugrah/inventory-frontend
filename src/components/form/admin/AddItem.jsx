@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function TambahKategori() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    nama: '',
-    jenis: ''
+    kategori: ''
   });
 
   const handleChange = (e) => {
@@ -26,24 +25,13 @@ export default function TambahKategori() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          name="nama"
-          placeholder="Nama Barang"
+          name="kategori"
+          placeholder="Kategori Barang"
           className="input input-bordered w-full"
-          value={formData.nama}
+          value={formData.kategori}
           onChange={handleChange}
           required
         />
-        <select
-        name="role"
-        className="select select-bordered w-full"
-        value={formData.role}
-        onChange={handleChange}
-        required
-      >
-        <option value="makanan">Makanan</option>
-        <option value="minuman">Minuman</option>
-        <option value="elektronik">Elektronik</option>
-      </select>
         <button type="submit" className="btn btn-primary w-full">
           Simpan
         </button>

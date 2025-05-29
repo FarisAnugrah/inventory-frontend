@@ -27,7 +27,6 @@ export default function user() {
       showControls={true}
       addLink="/tambah-user"
       linkEdit="/edit-user"
-      editorComponent={EditUser}
       />
     </div>
   );
