@@ -9,9 +9,9 @@ export default function pengelola_gudang() {
 
     const data = [
         { no: 1, nama: "Gudang A", lokasi: "Jakarta" },
-        { no: 2, nama: "Gudang B", lokasi: "Bogor" },
-        { no: 3, nama: "Gudang C", lokasi: "Tangerang"},
-        { no: 4, nama: "Gudang D", lokasi: "Depok" },
+        { no: 2, nama: "Gudang A", lokasi: "Bogor" },
+        { no: 3, nama: "Gudang A", lokasi: "Tangerang"},
+        { no: 4, nama: "Gudang A", lokasi: "Depok" },
     ];
     
 
