@@ -19,9 +19,8 @@ import { AuthProvider } from "@/context/AuthContext";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LayoutProvider({ children }) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const pathname = usePathname();
-  const [role, setRole] = useState("admin");
   const [menus, setMenus] = useState([]);
 
   const menuByRoles = {
@@ -41,9 +40,7 @@ export default function LayoutProvider({ children }) {
         label: "Pengelola Kategori",
         href: "/pengelola-kategori",
       },
-      { icon: <Boxes size={20} />,
-        label: "Stok Barang", 
-        href: "/stok/admin" },
+      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/admin" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -66,9 +63,7 @@ export default function LayoutProvider({ children }) {
         label: "Dashboard",
         href: "/dashboard/staff",
       },
-      { icon: <Boxes size={20} />, 
-        label: "Stok Barang", 
-        href: "/stok/staff" },
+      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -86,7 +81,6 @@ export default function LayoutProvider({ children }) {
       // },
     ],
     manager: [
-
       {
         icon: <Home size={20} />,
         label: "Dashboard",
@@ -102,9 +96,11 @@ export default function LayoutProvider({ children }) {
         label: "Barang Keluar",
         href: "/laporanBarangKeluar",
       },
-      { icon: <Boxes size={20} />, 
-        label: "Stok Barang", 
-        href: "/stok/manager" },
+      {
+        icon: <Boxes size={20} />,
+        label: "Stok Barang",
+        href: "/stok/manager",
+      },
       {
         icon: <PackageCheck size={20} />,
         label: "Approval Barang Keluar",
@@ -127,24 +123,27 @@ export default function LayoutProvider({ children }) {
       "/barangKeluar/admin": "Barang Keluar",
       "/barangKeluar/staff": "Barang Keluar",
       // "/mutasiBarang": "Mutasi Barang Antar Gudang",
-      "/laporanBarangMasuk" : "Laporan Barang Masuk",
-      "/laporanBarangKeluar" : "Laporan Barang Keluar",
-      "/menyetujui-barang" : "Menyetujui Barang Keluar",
-      "/pengelola-gudang/admin" : "Pengelola Gudang",
+      "/laporanBarangMasuk": "Laporan Barang Masuk",
+      "/laporanBarangKeluar": "Laporan Barang Keluar",
+      "/menyetujui-barang": "Menyetujui Barang Keluar",
+      "/pengelola-gudang/admin": "Pengelola Gudang",
     };
     return titles[path] || "Dashboard";
   };
 
+  const initialName = user?.name
+    .match(/(^\S\S?|\b\S)?/g)
+    .join("")
+    .match(/(^\S|\S$)?/g)
+    .join("")
+    .toUpperCase();
+
   useEffect(() => {
-
-    const storedRole =  "admin"; 
-
-    setRole(storedRole);
-    setMenus(menuByRoles[storedRole] || []);
+    setMenus(menuByRoles[user?.role || "admin"]);
   }, []);
 
   return (
-    <AuthProvider>
+    <>
       {!pathname.includes("/auth") ? (
         <div className="w-full flex overflow-hidden">
           {/* Sidebar */}
@@ -198,19 +197,16 @@ export default function LayoutProvider({ children }) {
             <header className="h-20 flex justify-between bg-blue-200 text-black px-6 py-4 font-semibold items-center">
               <h1 className="text-xl">{getPageTitle(pathname)}</h1>
               <div className="relative group cursor-pointer">
-                <img
-                  src="/assets/images/profiletest.jpg"
-                  alt="profile"
-                  width={40}
-                  height={40}
-                  className="rounded-full border border-white"
-                />
+                <div className="bg-accent uppercase text-lg profile-wrapper rounded-full border border-white w-10 h-10 flex items-center justify-center">
+                  <h1>{initialName}</h1>
+                </div>
                 <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                <button
-                  onClick={logout}
-                  className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
-                >Logout
-                </button>
+                  <button
+                    onClick={logout}
+                    className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
+                  >
+                    Logout
+                  </button>
                 </div>
               </div>
             </header>
@@ -222,6 +218,6 @@ export default function LayoutProvider({ children }) {
       ) : (
         <div>{children}</div>
       )}
-    </AuthProvider>
+    </>
   );
 }

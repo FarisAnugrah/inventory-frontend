@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 const COLORS = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#6366f1"];
 
@@ -20,7 +20,10 @@ export default function ClientPieChart({ dataPie }) {
             dataKey="value"
           >
             {dataPie.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Tooltip />

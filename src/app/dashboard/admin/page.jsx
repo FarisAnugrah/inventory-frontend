@@ -1,9 +1,18 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import dynamic from "next/dynamic";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
-const ClientPieChart = dynamic(() => import('@/components/ClientPieChart'), { ssr: false });
+const ClientPieChart = dynamic(() => import("@/components/ClientPieChart"), {
+  ssr: false,
+});
 
 const dataLine = [
   { name: "Mon", value: 30 },
@@ -50,7 +59,12 @@ export default function Dashboard() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={3} />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#3b82f6"
+                strokeWidth={3}
+              />
             </LineChart>
           </div>
         </div>
@@ -64,7 +78,12 @@ export default function Dashboard() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#8b5cf6" strokeWidth={3} />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#8b5cf6"
+                strokeWidth={3}
+              />
             </LineChart>
           </div>
         </div>

@@ -12,21 +12,11 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    isAuthenticated && router.push("/dashboard/staff");
-  }, [isAuthenticated]);
+  const { login, user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await authRequest("login", { email, password });
-    if (response?.token) {
-      login(response.token);
-    } else {
-      alert(response?.meta?.message);
-    }
+    login({ email, password });
   };
 
   return (

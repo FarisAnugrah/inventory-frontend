@@ -1,22 +1,38 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function TambahKategori() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    kategori: ''
-  });
+  const [category, setCategory] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.nama]: e.target.value });
-  };
+  const { token } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitted:', formData);
-    router.push('/pengelola-kategori'); // redirect
+    const response = await fetch(
+      `${process.env.NEXT_APP_BASEURL}/api/kategori`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+
+        body: JSON.stringify({
+          nama_kategori: category,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(response?.status);
+    }
+
+    router.push("/pengelola-kategori"); // redirect
   };
 
   return (
@@ -28,8 +44,8 @@ export default function TambahKategori() {
           name="kategori"
           placeholder="Kategori Barang"
           className="input input-bordered w-full"
-          value={formData.kategori}
-          onChange={handleChange}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           required
         />
         <button type="submit" className="btn btn-primary w-full">

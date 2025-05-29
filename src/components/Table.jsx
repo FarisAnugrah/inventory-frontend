@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CustomTable(param) {
   const {
@@ -17,34 +17,34 @@ export default function CustomTable(param) {
     showDetailsOnly = false,
     entriesOptions = [5, 10, 20],
     onDetailClick = () => {},
-    addLink = '/tambah-user',
-    linkEdit = '/edit-user',
+    addLink = "/tambah-user",
+    linkEdit = "/edit-user",
     editorComponent: EditorComponent = null,
   } = param;
 
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [entries, setEntries] = useState(entriesOptions[0]);
   const [page, setPage] = useState(1);
-  const [selectedWeek, setSelectedWeek] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState("");
 
   const handleAdd = () => {
     router.push(addLink);
   };
 
   const handleEdit = (row) => {
-  if (EditorComponent) {
-    setSelectedRow(row);
-    setShowEdit(true);
-  } else {
-    const encoded = encodeURIComponent(JSON.stringify(row));
-    router.push(`${editLink}?data=${encoded}`);
-  }
+    if (EditorComponent) {
+      setSelectedRow(row);
+      setShowEdit(true);
+    } else {
+      const encoded = encodeURIComponent(JSON.stringify(row));
+      router.push(`${editLink}?data=${encoded}`);
+    }
   };
 
   const handleDelete = (item) => {
-    if (confirm(`Yakin hapus data ${item.name || item.nama || 'ini'}?`)) {
-      console.log('Delete item:', item);
+    if (confirm(`Yakin hapus data ${item.name || item.nama || "ini"}?`)) {
+      console.log("Delete item:", item);
       // TODO: implement delete logic
     }
   };
@@ -61,7 +61,9 @@ export default function CustomTable(param) {
     const matchesSearch = Object.values(row).some((val) =>
       String(val).toLowerCase().includes(searchTerm.toLowerCase())
     );
-    const matchesWeek = selectedWeek ? isDateInWeek(row.tanggal, selectedWeek) : true;
+    const matchesWeek = selectedWeek
+      ? isDateInWeek(row.tanggal, selectedWeek)
+      : true;
     return matchesSearch && matchesWeek;
   });
 
@@ -76,59 +78,77 @@ export default function CustomTable(param) {
       {showControls && (
         <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
           {showAddButton && (
-            <button onClick={handleAdd} className="btn btn-primary">Tambah</button>
+            <button onClick={handleAdd} className="btn btn-primary">
+              Tambah
+            </button>
           )}
-          {showAddMutasi && (
-            <button onClick={handleAdd} className="btn btn-primary">Tambah Mutasi</button>
-          )}
-          {showWeekFilter && (
-            <div className="flex flex-col">
-              <label className="text-sm font-semibold">Filter Minggu</label>
-              <input
-                type="week"
-                className="input input-bordered input-sm"
-                value={selectedWeek}
-                onChange={e => {
-                  setSelectedWeek(e.target.value);
+          <div className="flex gap-4 justify-end w-full">
+            {showAddMutasi && (
+              <button onClick={handleAdd} className="btn btn-primary">
+                Tambah Mutasi
+              </button>
+            )}
+            {showWeekFilter && (
+              <div className="flex flex-col">
+                <input
+                  type="week"
+                  className="input input-bordered input-sm"
+                  value={selectedWeek}
+                  onChange={(e) => {
+                    setSelectedWeek(e.target.value);
+                    setPage(1);
+                  }}
+                />
+              </div>
+            )}
+            {showSearch && (
+              <div className="flex items-center gap-2 border rounded input input-bordered input-sm px-2 w-36">
+                <svg
+                  className="h-4 w-4 opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </g>
+                </svg>
+                <input
+                  type="text"
+                  className="w-full bg-transparent outline-none text-sm"
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setPage(1);
+                  }}
+                />
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm">Show</span>
+              <select
+                className="select select-bordered select-sm"
+                value={entries}
+                onChange={(e) => {
+                  setEntries(Number(e.target.value));
                   setPage(1);
                 }}
-              />
+              >
+                {entriesOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+              <span className="text-sm">entries</span>
             </div>
-          )}
-          {showSearch && (
-            <div className="flex items-center gap-2 border rounded input input-bordered input-sm px-2 w-25">
-              <svg className="h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input
-                type="text"
-                className="w-full bg-transparent outline-none text-sm"
-                value={searchTerm}
-                onChange={e => {
-                  setSearchTerm(e.target.value);
-                  setPage(1);
-                }}
-              />
-            </div>
-          )}
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Show</span>
-            <select
-              className="select select-bordered select-sm"
-              value={entries}
-              onChange={e => {
-                setEntries(Number(e.target.value));
-                setPage(1);
-              }}
-            >
-              {entriesOptions.map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-            <span className="text-sm">entries</span>
           </div>
         </div>
       )}
@@ -151,10 +171,13 @@ export default function CustomTable(param) {
             {displayedData.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {columns.map((col, colIndex) => (
-                  <td key={colIndex} className="py-2 px-4 border-t border-r border-gray-200">
-                    {col.accessor === 'no'
+                  <td
+                    key={colIndex}
+                    className="py-2 px-4 border-t border-r border-gray-200"
+                  >
+                    {col.accessor === "no"
                       ? startIndex + rowIndex + 1
-                      : row[col.accessor] ?? '-'}
+                      : row[col.accessor] ?? "-"}
                   </td>
                 ))}
                 {shouldShowActionColumn && (
@@ -199,7 +222,9 @@ export default function CustomTable(param) {
       {showPagination && (
         <div className="flex justify-between items-center mt-4 text-sm">
           <p>
-            Showing {startIndex + 1} to {Math.min(startIndex + entries, filteredData.length)} of {filteredData.length} entries
+            Showing {startIndex + 1} to{" "}
+            {Math.min(startIndex + entries, filteredData.length)} of{" "}
+            {filteredData.length} entries
           </p>
           <div className="join">
             <button
