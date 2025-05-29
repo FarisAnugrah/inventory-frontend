@@ -9,6 +9,7 @@ import {
   Upload,
   // Car,
   PackageCheck,
+  MapPinHouse,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -52,6 +53,11 @@ export default function LayoutProvider({ children }) {
         icon: <Upload size={20} />,
         label: "Barang Keluar",
         href: "/barangKeluar/admin",
+      },
+      {
+        icon: <MapPinHouse size={20} />,
+        label: "Pengelola Gudang",
+        href: "/pengelola-gudang/admin",
       },
     ],
     staff: [
@@ -124,6 +130,7 @@ export default function LayoutProvider({ children }) {
       "/laporanBarangMasuk" : "Laporan Barang Masuk",
       "/laporanBarangKeluar" : "Laporan Barang Keluar",
       "/menyetujui-barang" : "Menyetujui Barang Keluar",
+      "/pengelola-gudang/admin" : "Pengelola Gudang",
     };
     return titles[path] || "Dashboard";
   };
