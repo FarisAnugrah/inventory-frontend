@@ -15,7 +15,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AuthProvider } from "@/context/AuthContext";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LayoutProvider({ children }) {

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
-export default function AddUser() {
+export default function AddUser({ user = null }) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -15,21 +15,40 @@ export default function AddUser() {
 
   const { token } = useAuth();
 
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        password: "",
+        role: user.role || "",
+      });
+    }
+  }, [user]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/api/users", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+
+    const payload = user
+      ? { ...formData, ...(formData.password ? {} : { password: undefined }) }
+      : formData;
+
+    const response = await fetch(
+      `http://localhost:8000/api/users${user ? `/${user.id}` : ""}`,
+      {
+        method: user ? "PUT" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(response.status);
@@ -40,7 +59,9 @@ export default function AddUser() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-4">Tambah User</h1>
+      <h1 className="text-xl font-bold mb-4">
+        {!!user ? "Update" : "Tambah"} User
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
@@ -67,7 +88,7 @@ export default function AddUser() {
           className="input input-bordered w-full"
           value={formData.password}
           onChange={handleChange}
-          required
+          required={!user}
         />
         <select
           name="role"

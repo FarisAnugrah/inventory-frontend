@@ -1,21 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
-export default function TambahKategori() {
+export default function TambahKategori({ item = null }) {
   const router = useRouter();
   const [category, setCategory] = useState("");
 
   const { token } = useAuth();
 
+  useEffect(() => {
+    if (item) {
+      setCategory(item.nama_kategori);
+    }
+  }, [item]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      `${process.env.NEXT_APP_BASEURL}/api/kategori`,
+      `${process.env.NEXT_APP_BASEURL}/api/kategori${
+        item ? `/${item.id}` : ""
+      }`,
       {
-        method: "POST",
+        method: item ? "PUT" : "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -34,6 +42,8 @@ export default function TambahKategori() {
 
     router.push("/pengelola-kategori"); // redirect
   };
+
+  console.log(item);
 
   return (
     <div>

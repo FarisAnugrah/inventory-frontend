@@ -38,9 +38,7 @@ export default function user() {
     };
 
     getUsers();
-  }, [token, initialized]);
-
-  console.log(users);
+  }, [token, initialized, users]);
 
   return (
     <div className="p-6">
@@ -54,7 +52,8 @@ export default function user() {
         showWeekFilter={false}
         showControls={true}
         addLink="/tambah-user"
-        linkEdit="/edit-user"
+        editLink={`/edit-user`}
+        token={token}
       />
     </div>
   );

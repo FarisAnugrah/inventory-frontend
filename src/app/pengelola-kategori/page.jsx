@@ -52,6 +52,9 @@ export default function pengelola() {
         showWeekFilter={false}
         showControls={true}
         addLink="/tambah-item"
+        editLink="/edit-item"
+        token={token}
+        endpoint={"kategori"}
       />
     </div>
   );

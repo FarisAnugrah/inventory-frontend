@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function CustomTable(param) {
   const {
@@ -18,8 +19,10 @@ export default function CustomTable(param) {
     entriesOptions = [5, 10, 20],
     onDetailClick = () => {},
     addLink = "/tambah-user",
-    linkEdit = "/edit-user",
+    editLink = "/edit-user",
     editorComponent: EditorComponent = null,
+    token,
+    endpoint = "users",
   } = param;
 
   const router = useRouter();
@@ -32,20 +35,21 @@ export default function CustomTable(param) {
     router.push(addLink);
   };
 
-  const handleEdit = (row) => {
-    if (EditorComponent) {
-      setSelectedRow(row);
-      setShowEdit(true);
-    } else {
-      const encoded = encodeURIComponent(JSON.stringify(row));
-      router.push(`${editLink}?data=${encoded}`);
-    }
-  };
-
-  const handleDelete = (item) => {
+  const handleDelete = async (item, endpoint) => {
     if (confirm(`Yakin hapus data ${item.name || item.nama || "ini"}?`)) {
-      console.log("Delete item:", item);
-      // TODO: implement delete logic
+      await fetch(
+        `${process.env.NEXT_APP_BASEURL}/api/${endpoint}/${item.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      window.location.reload();
     }
   };
 
@@ -194,15 +198,15 @@ export default function CustomTable(param) {
                         <>
                           {showActions && (
                             <>
-                              <button
+                              <Link
                                 className="btn btn-sm text-white bg-red-500 font-normal"
-                                onClick={() => handleEdit(row)}
+                                href={`${editLink}/${row.id}`}
                               >
                                 Edit
-                              </button>
+                              </Link>
                               <button
                                 className="btn btn-sm text-black bg-blue-300 font-normal"
-                                onClick={() => handleDelete(row)}
+                                onClick={() => handleDelete(row, endpoint)}
                               >
                                 Delete
                               </button>
