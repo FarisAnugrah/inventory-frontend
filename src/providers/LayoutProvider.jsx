@@ -27,7 +27,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Home size={20} />,
         label: "Dashboard",
-        href: "/dashboard/admin",
+        href: "/",
       },
       {
         icon: <Users size={20} />,
@@ -43,7 +43,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
-        href: "/barangMasuk/admin",
+        href: "/barangMasuk",
       },
       {
         icon: <Upload size={20} />,
@@ -60,35 +60,30 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Home size={20} />,
         label: "Dashboard",
-        href: "/dashboard/staff",
+        href: "/",
       },
       { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
-        href: "/barangMasuk/staff",
+        href: "/barangMasuk/",
       },
       {
         icon: <Upload size={20} />,
         label: "Barang Keluar",
         href: "/barangKeluar/staff",
       },
-      // {
-      //   icon: <Car size={20} />,
-      //   label: "Mutasi Barang",
-      //   href: "/mutasiBarang",
-      // },
     ],
     manager: [
       {
         icon: <Home size={20} />,
         label: "Dashboard",
-        href: "/dashboard/manager",
+        href: "/",
       },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
-        href: "/laporanBarangMasuk",
+        href: "/barangMasuk",
       },
       {
         icon: <Upload size={20} />,
@@ -110,9 +105,9 @@ export default function LayoutProvider({ children }) {
 
   const getPageTitle = (path) => {
     const titles = {
-      "/dashboard/admin": "Dashboard",
-      "/dashboard/staff": "Dashboard",
-      "/dashboard/manager": "Dashboard",
+      "/dashboard": "Dashboard",
+      "/dashboard": "Dashboard",
+      "/dashboard": "Dashboard",
       "/pengelola-pengguna": "User Management",
       "/pengelola-kategori": "Pengelola Kategori",
       "/stok/admin": "Stok Barang",
@@ -139,7 +134,7 @@ export default function LayoutProvider({ children }) {
 
   useEffect(() => {
     setMenus(menuByRoles[user?.role || "admin"]);
-  }, []);
+  }, [user]);
 
   return (
     <>

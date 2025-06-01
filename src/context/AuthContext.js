@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.setItem("access_token", token);
       sessionStorage.setItem("user", JSON.stringify(user));
 
-      router.push(`/dashboard/${user.role}`);
+      router.push(`/`);
     } catch (error) {
       console.error("Login failed:", error);
 
