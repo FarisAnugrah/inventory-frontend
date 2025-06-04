@@ -1,6 +1,5 @@
 "use client";
 
-import TambahKategori from "@/components/form/admin/AddItem";
 import AddUser from "@/components/form/admin/AddUser";
 import { useAuth } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
@@ -42,7 +41,7 @@ function EditUserPage() {
 
   return (
     <div className="p-6">
-      <TambahKategori user={user} />
+      <AddUser user={user} />
     </div>
   );
 }

@@ -4,28 +4,26 @@ import Table from "@/components/Table";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
-export default function barangMasuk() {
+export default function barangKeluar() {
   const columns = [
     { header: "No", accessor: "no" },
-    { header: "Kode Masuk", accessor: "kode_masuk" },
-    { header: "Nama Barang", accessor: "nama_barang" },
-    { header: "Kategori", accessor: "kategori" },
-    { header: "Gudang", accessor: "gudang" },
-    { header: "Satuan", accessor: "satuan" },
-    { header: "Stok Masuk", accessor: "stok_masuk" },
-    { header: "Tanggal Masuk", accessor: "tanggal" },
+    { header: "Nama Barang", accessor: "barang" },
+    { header: "Nama Gudang", accessor: "gudang" },
+    { header: "Nama User", accessor: "user" },
+    { header: "Jumlah", accessor: "jumlah" },
+    { header: "Tanggal Keluar", accessor: "tanggal" },
+    { header: "Status", accessor: "status" },
   ];
-
   const { user, token, initialized } = useAuth();
-  const [barangMasuk, setBarangMasuk] = useState([]);
+  const [barangKeluar, setBarangKeluar] = useState([]);
 
   useEffect(() => {
     if (!token || !initialized) return;
 
-    const getBarangMasuk = async () => {
+    const getBarangKeluar = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_APP_BASEURL}/api/barang-masuk`,
+          `${process.env.NEXT_APP_BASEURL}/api/barang-keluar`,
           {
             method: "GET",
             headers: {
@@ -36,32 +34,32 @@ export default function barangMasuk() {
           }
         );
 
-        const { data } = await response.json();
+        const data = await response.json();
 
-        setBarangMasuk(data);
+        setBarangKeluar(data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    getBarangMasuk();
+    getBarangKeluar();
   }, [token, initialized]);
+
+  console.log(barangKeluar);
 
   return (
     <div className="p-6">
       <Table
         columns={columns}
-        data={barangMasuk}
+        data={barangKeluar}
         showAddButton={user?.role === "staff"}
         showAddMutasi={false}
         showSearch={true}
         showPagination={true}
         showWeekFilter={true}
         showControls={true}
-        showActions={true}
+        showActions={false}
         showDetailsOnly={false}
-        addLink={"/tambah-masuk"}
-        editLink={`/tambah-masuk`}
       />
     </div>
   );

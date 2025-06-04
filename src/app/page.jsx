@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
@@ -9,16 +10,83 @@ const ClientPieChart = dynamic(() => import("@/components/ClientPieChart"), {
 });
 
 export default function Dashboard() {
+  const [data, setData] = useState({
+    barang: null,
+    barangMasuk: null,
+    barangKeluar: null,
+    kategori: null,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const { token, initialized } = useAuth();
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    if (!initialized || !token) return;
+
+    const fetchData = async () => {
+      try {
+        const [response1, response2, response3, response4] = await Promise.all([
+          fetch(`${process.env.NEXT_APP_BASEURL}/api/barang`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          fetch(`${process.env.NEXT_APP_BASEURL}/api/barang-masuk`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          fetch(`${process.env.NEXT_APP_BASEURL}/api/barang-keluar`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          fetch(`${process.env.NEXT_APP_BASEURL}/api/kategori`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+        // Convert all responses to JSON
+        const [barang, barangMasuk, barangKeluar, kategori] = await Promise.all(
+          [
+            response1.json(),
+            response2.json(),
+            response3.json(),
+            response4.json(),
+          ]
+        );
+
+        setData({ barang, barangMasuk, barangKeluar, kategori });
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [token, initialized]);
+
+  const { barang, barangMasuk, barangKeluar, kategori } = data;
 
   const cards = [
-    { title: "Jumlah Barang Masuk", count: 12 },
-    { title: "Jumlah Barang Keluar", count: 7 },
-    { title: "Jumlah Supplier", count: 5 },
+    { title: "Jumlah Stok Barang", count: barang?.data?.data?.length || 0 },
+    {
+      title: "Jumlah Barang Masuk",
+      count: barangMasuk?.data?.length || 0,
+    },
+    {
+      title: "Jumlah Barang Keluar",
+      count: barangKeluar?.length || 0,
+    },
   ];
   const dataLine = [
     { name: "Mon", value: 30 },
@@ -30,12 +98,14 @@ export default function Dashboard() {
   ];
 
   const dataPie = [
-    { name: "Makanan", value: 41.1 },
-    { name: "Minuman", value: 99 },
-    { name: "Elektronik", value: 73.1 },
-    { name: "AAT", value: 34.6 },
-    { name: "Sembako", value: 98.84 },
+    barang?.data?.data?.reduce((acc, item) => {
+      const category = item.kategori?.nama_kategori || "Uncategorized";
+      acc[category] = (acc[category] || 0) + 1;
+      return { name: category, value: acc[category] };
+    }, {}),
   ];
+
+  console.log("Data fetched:", data);
 
   return (
     <div className="p-6">

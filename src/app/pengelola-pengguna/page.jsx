@@ -38,7 +38,7 @@ export default function user() {
     };
 
     getUsers();
-  }, [token, initialized, users]);
+  }, [token, initialized]);
 
   return (
     <div className="p-6">

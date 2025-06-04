@@ -2,30 +2,35 @@
 
 import Table from "@/components/Table";
 import { useAuth } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function barangMasuk() {
+export default function stok() {
+  const { user, token, initialized } = useAuth();
+  const [barang, setBarang] = useState([]);
+  const gudangFormatter = (row) => {
+    return row?.gudang?.nama_gudang || "Tidak Tersedia";
+  };
   const columns = [
     { header: "No", accessor: "no" },
-    { header: "Kode Masuk", accessor: "kode_masuk" },
+    { header: "Kode Barang", accessor: "kode_barang" },
     { header: "Nama Barang", accessor: "nama_barang" },
-    { header: "Kategori", accessor: "kategori" },
-    { header: "Gudang", accessor: "gudang" },
-    { header: "Satuan", accessor: "satuan" },
-    { header: "Stok Masuk", accessor: "stok_masuk" },
-    { header: "Tanggal Masuk", accessor: "tanggal" },
-  ];
+    { header: "Jumlah Barang", accessor: "stok_keseluruhan" },
+    {
+      header: "Gudang",
+      accessor: "gudang?.nama_gudang",
 
-  const { user, token, initialized } = useAuth();
-  const [barangMasuk, setBarangMasuk] = useState([]);
+      formatter: gudangFormatter,
+    },
+    { header: "Satuan", accessor: "satuan" },
+  ];
 
   useEffect(() => {
     if (!token || !initialized) return;
 
-    const getBarangMasuk = async () => {
+    const getBarang = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_APP_BASEURL}/api/barang-masuk`,
+          `${process.env.NEXT_APP_BASEURL}/api/barang`,
           {
             method: "GET",
             headers: {
@@ -38,30 +43,30 @@ export default function barangMasuk() {
 
         const { data } = await response.json();
 
-        setBarangMasuk(data);
+        setBarang(data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    getBarangMasuk();
+    getBarang();
   }, [token, initialized]);
 
+  console.log("Barang data:", barang);
   return (
     <div className="p-6">
       <Table
         columns={columns}
-        data={barangMasuk}
+        data={barang?.data}
         showAddButton={user?.role === "staff"}
         showAddMutasi={false}
-        showSearch={true}
+        showSearch={false}
         showPagination={true}
-        showWeekFilter={true}
+        showWeekFilter={false}
         showControls={true}
         showActions={true}
         showDetailsOnly={false}
-        addLink={"/tambah-masuk"}
-        editLink={`/tambah-masuk`}
+        addLink="/tambah-stok"
       />
     </div>
   );

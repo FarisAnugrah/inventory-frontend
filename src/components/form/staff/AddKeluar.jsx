@@ -20,7 +20,7 @@ export default function TambahKeluarPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Submitted:', formData);
-    router.push('/barangKeluar/staff'); // redirect
+    router.push('/barangKeluar'); // redirect
   };
 
   return (

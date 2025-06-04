@@ -20,7 +20,7 @@ export default function TambahStok() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Submitted:', formData);
-    router.push('/stok/staff'); // redirect
+    router.push('/stok'); // redirect
   };
 
   return (

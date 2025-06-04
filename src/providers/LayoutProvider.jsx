@@ -39,7 +39,7 @@ export default function LayoutProvider({ children }) {
         label: "Pengelola Kategori",
         href: "/pengelola-kategori",
       },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/admin" },
+      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -48,7 +48,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Upload size={20} />,
         label: "Barang Keluar",
-        href: "/barangKeluar/admin",
+        href: "/barangKeluar",
       },
       {
         icon: <MapPinHouse size={20} />,
@@ -62,7 +62,7 @@ export default function LayoutProvider({ children }) {
         label: "Dashboard",
         href: "/",
       },
-      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok/staff" },
+      { icon: <Boxes size={20} />, label: "Stok Barang", href: "/stok" },
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
@@ -71,7 +71,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Upload size={20} />,
         label: "Barang Keluar",
-        href: "/barangKeluar/staff",
+        href: "/barangKeluar",
       },
     ],
     manager: [
@@ -93,7 +93,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Boxes size={20} />,
         label: "Stok Barang",
-        href: "/stok/manager",
+        href: "/stok",
       },
       {
         icon: <PackageCheck size={20} />,
@@ -110,12 +110,12 @@ export default function LayoutProvider({ children }) {
       "/dashboard": "Dashboard",
       "/pengelola-pengguna": "User Management",
       "/pengelola-kategori": "Pengelola Kategori",
-      "/stok/admin": "Stok Barang",
-      "/stok/staff": "Stok Barang",
+      "/stok": "Stok Barang",
+      "/stok": "Stok Barang",
       "/barangMasuk/admin": "Barang Masuk",
       "/barangMasuk/staff": "Barang Masuk",
-      "/barangKeluar/admin": "Barang Keluar",
-      "/barangKeluar/staff": "Barang Keluar",
+      "/barangKeluar": "Barang Keluar",
+      "/barangKeluar": "Barang Keluar",
       // "/mutasiBarang": "Mutasi Barang Antar Gudang",
       "/laporanBarangMasuk": "Laporan Barang Masuk",
       "/laporanBarangKeluar": "Laporan Barang Keluar",

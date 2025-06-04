@@ -181,7 +181,7 @@ export default function CustomTable(param) {
                   >
                     {col.accessor === "no"
                       ? startIndex + rowIndex + 1
-                      : row[col.accessor] ?? "-"}
+                      : row[col.accessor] || col.formatter?.(row) || "-"}
                   </td>
                 ))}
                 {shouldShowActionColumn && (
