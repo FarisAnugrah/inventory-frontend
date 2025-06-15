@@ -19,7 +19,7 @@ export default function ClientPieChart({ dataPie }) {
             fill="#8884d8"
             dataKey="value"
           >
-            {dataPie.map((entry, index) => (
+            {dataPie?.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -55,7 +56,8 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const errorData = await response.json();
+        throw new Error(errorData.meta.message || "Login Failed");
       }
 
       const result = await response.json();
@@ -74,12 +76,10 @@ export const AuthProvider = ({ children }) => {
 
       router.push(`/`);
     } catch (error) {
-      console.error("Login failed:", error);
+      toast.error(error.message || "Login Failed");
 
       sessionStorage.removeItem("access_token");
       sessionStorage.removeItem("user");
-
-      throw error;
     }
   };
 

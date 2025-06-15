@@ -43,7 +43,6 @@ export default function TambahKategori({ item = null }) {
     router.push("/pengelola-kategori"); // redirect
   };
 
-  console.log(item);
 
   return (
     <div>

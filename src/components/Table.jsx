@@ -15,6 +15,7 @@ export default function CustomTable(param) {
     showPagination = true,
     showSearch = true,
     showActions = true,
+    removeDelete = false,
     showDetailsOnly = false,
     entriesOptions = [5, 10, 20],
     onDetailClick = () => {},
@@ -186,7 +187,7 @@ export default function CustomTable(param) {
                 ))}
                 {shouldShowActionColumn && (
                   <td className="py-2 px-4 border-t border-r border-gray-200">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-center w-full">
                       {showDetailsOnly ? (
                         <button
                           className="btn btn-sm text-black bg-blue-200 font-normal"
@@ -204,12 +205,14 @@ export default function CustomTable(param) {
                               >
                                 Edit
                               </Link>
-                              <button
-                                className="btn btn-sm text-black bg-blue-300 font-normal"
-                                onClick={() => handleDelete(row, endpoint)}
-                              >
-                                Delete
-                              </button>
+                              {!removeDelete && (
+                                <button
+                                  className={`$ btn btn-sm text-black bg-blue-300 font-normal`}
+                                  onClick={() => handleDelete(row, endpoint)}
+                                >
+                                  Delete
+                                </button>
+                              )}
                             </>
                           )}
                         </>

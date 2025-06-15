@@ -59,6 +59,7 @@ export default function barangMasuk() {
         showWeekFilter={true}
         showControls={true}
         showActions={true}
+        removeDelete={user?.role === "staff"}
         showDetailsOnly={false}
         addLink={"/tambah-masuk"}
         editLink={`/tambah-masuk`}

@@ -45,7 +45,6 @@ export default function barangKeluar() {
     getBarangKeluar();
   }, [token, initialized]);
 
-  console.log(barangKeluar);
 
   return (
     <div className="p-6">
@@ -58,8 +57,9 @@ export default function barangKeluar() {
         showPagination={true}
         showWeekFilter={true}
         showControls={true}
-        showActions={false}
         showDetailsOnly={false}
+        showActions={true}
+        removeDelete={true}
       />
     </div>
   );

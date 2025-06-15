@@ -97,16 +97,22 @@ export default function Dashboard() {
     { name: "Sat", value: 80 },
   ];
 
-  const dataPie = [
-    barang?.data?.data?.reduce((acc, item) => {
-      const category = item.kategori?.nama_kategori || "Uncategorized";
-      acc[category] = (acc[category] || 0) + 1;
-      return { name: category, value: acc[category] };
-    }, {}),
-  ];
+  console.log(barang);
 
-  console.log("Data fetched:", data);
+  const dataPie = barang?.data?.data?.reduce((acc, item) => {
+    const category = item?.kategori?.nama_kategori || "Uncategorized";
+    const value = item?.stok_keseluruhan || 0;
 
+    const existing = acc.find((entry) => entry.name === category);
+
+    if (existing) {
+      existing.value += value;
+    } else {
+      acc.push({ name: category, value });
+    }
+
+    return acc;
+  }, []);
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

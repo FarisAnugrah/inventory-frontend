@@ -52,7 +52,6 @@ export default function stok() {
     getBarang();
   }, [token, initialized]);
 
-  console.log("Barang data:", barang);
   return (
     <div className="p-6">
       <Table
@@ -67,6 +66,7 @@ export default function stok() {
         showActions={true}
         showDetailsOnly={false}
         addLink="/tambah-stok"
+        editlink="/edit-item"
       />
     </div>
   );

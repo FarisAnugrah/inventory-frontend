@@ -122,7 +122,7 @@ export default function LayoutProvider({ children }) {
       "/menyetujui-barang": "Menyetujui Barang Keluar",
       "/pengelola-gudang/admin": "Pengelola Gudang",
     };
-    return titles[path] || "Dashboard";
+    return titles[path] || "";
   };
 
   const initialName = user?.name
@@ -141,7 +141,7 @@ export default function LayoutProvider({ children }) {
       {!pathname.includes("/auth") ? (
         <div className="w-full flex overflow-hidden">
           {/* Sidebar */}
-          <aside className="h-screen bg-primary w-64 p-4 shrink-0">
+          <aside className="h-screen bg-[#436DA7] w-64 p-4 shrink-0">
             <div className="flex items-center gap-2 mb-10">
               <Image
                 src="/assets/images/box.png"
@@ -204,7 +204,7 @@ export default function LayoutProvider({ children }) {
                 </div>
               </div>
             </header>
-            <main className="flex-1 bg-[var(--background)] p-6 overflow-auto">
+            <main className="flex-1  p-6 overflow-auto">
               <div className="w-full overflow-x-auto">{children}</div>
             </main>
           </div>
