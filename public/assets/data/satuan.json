@@ -1,0 +1,31 @@
+{
+  "satuan": [
+    { "kode": "PCS", "nama": "Pieces", "deskripsi": "Satuan per satuan barang" },
+    { "kode": "KRT", "nama": "Karton", "deskripsi": "Satuan dalam bentuk karton, biasanya berisi beberapa pcs" },
+    { "kode": "KDS", "nama": "Kardus", "deskripsi": "Satuan dalam bentuk kardus, sering digunakan dalam pengiriman besar" },
+    { "kode": "LSN", "nama": "Lusin", "deskripsi": "Satuan berisi 12 pcs" },
+    { "kode": "PAK", "nama": "Paket", "deskripsi": "Satuan dalam bentuk paket, isi dapat bervariasi" },
+    { "kode": "ROL", "nama": "Roll", "deskripsi": "Satuan gulungan, biasanya untuk bahan seperti kain atau kabel" },
+    { "kode": "SET", "nama": "Set", "deskripsi": "Satuan set lengkap berisi beberapa komponen" },
+    { "kode": "BOT", "nama": "Botol", "deskripsi": "Satuan dalam bentuk botol" },
+    { "kode": "DRM", "nama": "Drum", "deskripsi": "Satuan dalam bentuk drum, biasanya untuk cairan dalam volume besar" },
+    { "kode": "BOX", "nama": "Box", "deskripsi": "Satuan dalam bentuk kotak, bisa kecil atau besar" },
+    { "kode": "BAL", "nama": "Bale", "deskripsi": "Satuan bal, biasanya untuk tekstil atau kertas" },
+    { "kode": "BKS", "nama": "Bungkus", "deskripsi": "Satuan bungkus, sering untuk makanan atau barang kecil" },
+    { "kode": "GLS", "nama": "Gelas", "deskripsi": "Satuan dalam bentuk gelas, biasa untuk minuman" },
+    { "kode": "SHP", "nama": "Sachet Pack", "deskripsi": "Satuan sachet, biasanya untuk produk kecil seperti kopi atau bumbu" },
+    { "kode": "BAG", "nama": "Bag", "deskripsi": "Satuan kantong atau tas, bisa kertas atau plastik" },
+    { "kode": "TIN", "nama": "Kaleng", "deskripsi": "Satuan dalam bentuk kaleng" },
+    { "kode": "GRS", "nama": "Gross", "deskripsi": "Satuan 144 pcs (12 lusin)" },
+    { "kode": "LTR", "nama": "Liter", "deskripsi": "Satuan volume untuk cairan" },
+    { "kode": "KG", "nama": "Kilogram", "deskripsi": "Satuan berat" },
+    { "kode": "G", "nama": "Gram", "deskripsi": "Satuan berat kecil" },
+    { "kode": "M", "nama": "Meter", "deskripsi": "Satuan panjang" },
+    { "kode": "CM", "nama": "Centimeter", "deskripsi": "Satuan panjang kecil" },
+    { "kode": "MTR", "nama": "Meter Roll", "deskripsi": "Satuan gulungan per meter" },
+    { "kode": "AMP", "nama": "Ampul", "deskripsi": "Satuan untuk dosis kecil cairan, sering digunakan di farmasi" },
+    { "kode": "CAP", "nama": "Capsule", "deskripsi": "Satuan kapsul dalam farmasi" },
+    { "kode": "TAB", "nama": "Tablet", "deskripsi": "Satuan tablet dalam farmasi" },
+    { "kode": "TRAY", "nama": "Tray", "deskripsi": "Satuan nampan atau baki, biasa untuk telur atau makanan" }
+  ]
+}
