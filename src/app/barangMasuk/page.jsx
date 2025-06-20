@@ -13,7 +13,7 @@ export default function barangMasuk() {
     { header: "Gudang", accessor: "gudang" },
     { header: "Satuan", accessor: "satuan" },
     { header: "Stok Masuk", accessor: "stok_masuk" },
-    { header: "Tanggal Masuk", accessor: "tanggal" },
+    { header: "Tanggal Masuk", accessor: "tanggal_masuk" },
   ];
 
   const { user, token, initialized } = useAuth();
@@ -58,11 +58,12 @@ export default function barangMasuk() {
         showPagination={true}
         showWeekFilter={true}
         showControls={true}
-        showActions={true}
-        removeDelete={user?.role === "staff"}
         showDetailsOnly={false}
+        showActions={user?.role === "staff"}
         addLink={"/tambah-masuk"}
         editLink={`/tambah-masuk`}
+        token={token}
+        endpoint={"barang-masuk"}
       />
     </div>
   );

@@ -57,16 +57,14 @@ export default function stok() {
       <Table
         columns={columns}
         data={barang?.data}
-        showAddButton={user?.role === "staff"}
+        showAddButton={false}
         showAddMutasi={false}
-        showSearch={false}
+        showSearch={true}
         showPagination={true}
         showWeekFilter={false}
         showControls={true}
-        showActions={true}
+        showActions={false}
         showDetailsOnly={false}
-        addLink="/tambah-stok"
-        editlink="/edit-item"
       />
     </div>
   );

@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { set } from "date-fns";
+import { useNotification } from "@/context/NotificationContext";
 
 export default function TambahMasukPage({ incomingItem = null }) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     nama_barang: "",
     kategori_id: 1,
-    satuan: "",
+    satuan: "PCS",
     jumlah: "",
     gudang_id: 1,
   });
@@ -87,9 +88,7 @@ export default function TambahMasukPage({ incomingItem = null }) {
     };
 
     fetchData();
-    
   }, [token, initialized, incomingItem, isLoading]);
-
 
   console.log("Form Data:", formData);
   const handleChange = (e) => {
@@ -128,7 +127,6 @@ export default function TambahMasukPage({ incomingItem = null }) {
           body: JSON.stringify(formData),
         }
       );
-
       router.push("/barangMasuk"); // redirect
     } catch (err) {
       console.error(err);
@@ -184,10 +182,13 @@ export default function TambahMasukPage({ incomingItem = null }) {
   return (
     <>
       <div className="tabs tabs-lift ">
+        {incomingItem && (
+          <h1 className="mb-4 text-2xl font-semibold">Edit Barang Masuk</h1>
+        )}
         <input
           type="radio"
           name="my_tabs_3"
-          className={`tab w-1/2`}
+          className={`tab w-1/2 ${incomingItem ? "hidden" : ""}`}
           aria-label="Tambah Barang Masuk Baru"
           defaultChecked
         />
@@ -234,7 +235,7 @@ export default function TambahMasukPage({ incomingItem = null }) {
                 >
                   {satuanList?.satuan?.map((satuan, key) => {
                     return (
-                      <option value={satuan.nama} key={key}>
+                      <option value={satuan.kode} key={key}>
                         {satuan.nama} - {`(${satuan.kode})`}
                       </option>
                     );

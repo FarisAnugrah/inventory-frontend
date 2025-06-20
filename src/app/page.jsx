@@ -4,8 +4,11 @@ import { useAuth } from "@/context/AuthContext";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
-// Dynamically import the pie chart with SSR disabled
+// Dynamically import the pie chart and bar chart with SSR disabled
 const ClientPieChart = dynamic(() => import("@/components/ClientPieChart"), {
+  ssr: false,
+});
+const BarangBarChart = dynamic(() => import("@/components/BarangBarChart"), {
   ssr: false,
 });
 
@@ -19,6 +22,7 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const { token, initialized } = useAuth();
 
   useEffect(() => {
@@ -75,6 +79,14 @@ export default function Dashboard() {
     fetchData();
   }, [token, initialized]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      setCurrentMonth(now.getMonth());
+    }, 60 * 1000); // cek tiap menit
+    return () => clearInterval(interval);
+  }, []);
+
   const { barang, barangMasuk, barangKeluar, kategori } = data;
 
   const cards = [
@@ -85,7 +97,7 @@ export default function Dashboard() {
     },
     {
       title: "Jumlah Barang Keluar",
-      count: barangKeluar?.length || 0,
+      count: barangKeluar?.data?.data?.length || 0,
     },
   ];
   const dataLine = [
@@ -96,8 +108,6 @@ export default function Dashboard() {
     { name: "Fri", value: 72 },
     { name: "Sat", value: 80 },
   ];
-
-  console.log(barang);
 
   const dataPie = barang?.data?.data?.reduce((acc, item) => {
     const category = item?.kategori?.nama_kategori || "Uncategorized";
@@ -125,49 +135,18 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Barang Masuk - Only render on client */}
+        {/* Bar Chart (2 columns wide) */}
         {isMounted && (
-          <div className="card bg-base-100 shadow-md p-4">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Barang Masuk</h2>
-              <LineChart width={280} height={200} data={dataLine}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#3b82f6"
-                  strokeWidth={3}
-                />
-              </LineChart>
-            </div>
+          <div className="bg-base-100 shadow-md p-4 rounded col-span-2">
+            <BarangBarChart
+              key={currentMonth} // force re-render saat bulan berubah
+              barangMasuk={barangMasuk?.data}
+              barangKeluar={barangKeluar?.data?.data}
+            />
           </div>
         )}
 
-        {/* Barang Keluar - Only render on client */}
-        {isMounted && (
-          <div className="card bg-base-100 shadow-md p-4">
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Barang Keluar</h2>
-              <LineChart width={280} height={200} data={dataLine}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#8b5cf6"
-                  strokeWidth={3}
-                />
-              </LineChart>
-            </div>
-          </div>
-        )}
-
-        {/* PieChart - Only render on client */}
+        {/* Pie Chart */}
         {isMounted && <ClientPieChart dataPie={dataPie} />}
       </div>
     </div>
