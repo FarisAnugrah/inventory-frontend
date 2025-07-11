@@ -7,18 +7,20 @@ import {
   Boxes,
   Download,
   Upload,
-  // Car,
   PackageCheck,
   MapPinHouse,
+  Bell,
 } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useNotification } from "@/context/NotificationContext";
 
 export default function LayoutProvider({ children }) {
   const { logout, user } = useAuth();
+  const { count } = useNotification();
   const pathname = usePathname();
   const [menus, setMenus] = useState([]);
 
@@ -50,11 +52,11 @@ export default function LayoutProvider({ children }) {
         label: "Barang Keluar",
         href: "/barangKeluar",
       },
-      {
-        icon: <MapPinHouse size={20} />,
-        label: "Pengelola Gudang",
-        href: "/pengelola-gudang/admin",
-      },
+      // {
+      //   icon: <MapPinHouse size={20} />,
+      //   label: "Pengelola Gudang",
+      //   href: "/pengelola-gudang",
+      // },
     ],
     staff: [
       {
@@ -66,7 +68,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Download size={20} />,
         label: "Barang Masuk",
-        href: "/barangMasuk/",
+        href: "/barangMasuk",
       },
       {
         icon: <Upload size={20} />,
@@ -74,7 +76,7 @@ export default function LayoutProvider({ children }) {
         href: "/barangKeluar",
       },
     ],
-    manager: [
+    manajer: [
       {
         icon: <Home size={20} />,
         label: "Dashboard",
@@ -88,7 +90,7 @@ export default function LayoutProvider({ children }) {
       {
         icon: <Upload size={20} />,
         label: "Barang Keluar",
-        href: "/laporanBarangKeluar",
+        href: "/barangKeluar",
       },
       {
         icon: <Boxes size={20} />,
@@ -112,15 +114,16 @@ export default function LayoutProvider({ children }) {
       "/pengelola-kategori": "Pengelola Kategori",
       "/stok": "Stok Barang",
       "/stok": "Stok Barang",
-      "/barangMasuk/admin": "Barang Masuk",
-      "/barangMasuk/staff": "Barang Masuk",
+      "/barangMasuk": "Barang Masuk",
+      "/barangMasuk": "Barang Masuk",
       "/barangKeluar": "Barang Keluar",
       "/barangKeluar": "Barang Keluar",
       // "/mutasiBarang": "Mutasi Barang Antar Gudang",
       "/laporanBarangMasuk": "Laporan Barang Masuk",
       "/laporanBarangKeluar": "Laporan Barang Keluar",
       "/menyetujui-barang": "Menyetujui Barang Keluar",
-      "/pengelola-gudang/admin": "Pengelola Gudang",
+      // "/pengelola-gudang": "Pengelola Gudang",
+      "/notifikasi": "Notifikasi",
     };
     return titles[path] || "";
   };
@@ -190,17 +193,35 @@ export default function LayoutProvider({ children }) {
           <div className="flex flex-col h-screen w-full overflow-hidden">
             <header className="h-20 flex justify-between bg-blue-200 text-black px-6 py-4 font-semibold items-center">
               <h1 className="text-xl">{getPageTitle(pathname)}</h1>
-              <div className="relative group cursor-pointer">
-                <div className="bg-accent uppercase text-lg profile-wrapper rounded-full border border-white w-10 h-10 flex items-center justify-center">
-                  <h1>{initialName}</h1>
-                </div>
-                <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                  <button
-                    onClick={logout}
-                    className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
+              <div className="wrapper flex gap-8 items-center">
+                {user?.role === "manajer" && (
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle hover:bg-transparent  hover:outline-0 hover:ring-0 hover:border-0 hover:scale-110 transition-transform duration-300 ease-in-out"
                   >
-                    Logout
-                  </button>
+                    <Link href={"/notifikasi"} className="indicator">
+                      <Bell size={20} />
+                      {count > 0 && (
+                        <span className="badge badge-xs indicator-item bg-red-400 border-0 outline-0 rounded-full">
+                          {count}
+                        </span>
+                      )}
+                    </Link>
+                  </div>
+                )}
+                <div className="relative group cursor-pointer">
+                  <div className="bg-accent uppercase text-lg profile-wrapper rounded-full border border-white w-10 h-10 flex items-center justify-center">
+                    <h1>{initialName}</h1>
+                  </div>
+                  <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                    <button
+                      onClick={logout}
+                      className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-left"
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </div>
               </div>
             </header>

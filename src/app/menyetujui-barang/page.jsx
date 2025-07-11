@@ -1,33 +1,65 @@
-'use client';
-import { useState } from 'react';
-import Table from '@/components/Table';
-import DetailModal from '@/components/DetailModal';
+"use client";
+import { useEffect, useState } from "react";
+import Table from "@/components/Table";
+import { useAuth } from "@/context/AuthContext";
+import DetailModal from "@/components/DetailModal";
 
 export default function MenyetujuiBarang() {
   const [selectedItem, setSelectedItem] = useState(null);
+  const { user, token, initialized } = useAuth();
+  const [barangKeluar, setBarangKeluar] = useState([]);
+
+  useEffect(() => {
+    if (!token || !initialized) return;
+    const getBarangKeluar = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_APP_BASEURL}/api/barang-keluar`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
+
+        const { data } = await response.json();
+        setBarangKeluar(data);
+      } catch (error) {
+        toast.error(error.meta.message || "Gagal mengambil data barang keluar");
+      }
+    };
+    getBarangKeluar();
+  }, [token, initialized, selectedItem]);
+
+  const userFormatter = (row) => {
+    return row?.user?.name || "Tidak Tersedia";
+  };
+
+  const barangFormatter = (row) => {
+    return row?.barang?.nama_barang || "Tidak Tersedia";
+  };
 
   const columns = [
     { header: "No", accessor: "no" },
-    { header: "Nama User", accessor: "user" },
-    { header: "Nama Barang", accessor: "nama" },
-    { header: "Nama Supplier", accessor: "supplier" },
-    { header: "Stok Keluar", accessor: "stok" },
-    { header: "Tanggal Keluar", accessor: "tanggal" },
-    
-  ];
-
-  const data = [
-    { no: 1, user: "Suci Indah", nama: "Indomie", supplier: "CV Indah", stok: "100", tanggal: "2023-03-23" },
-    { no: 2, user: "Suci Indah", nama: "Le Minerale", supplier: "CV Intan", stok: "20", tanggal: "2023-03-20" },
-    { no: 3, user: "Suci Indah", nama: "Tolak Angin", supplier: "CV Persada", stok: "3", tanggal: "2023-03-21" },
-    { no: 4, user: "Suci Indah", nama: "Lampu Phillips", supplier: "CV Utama", stok: "40", tanggal: "2023-03-22" },
+    { header: "Nama User", accessor: "user?.name", formatter: userFormatter },
+    {
+      header: "Nama Barang",
+      accessor: "barang?.nama_barang",
+      formatter: barangFormatter,
+    },
+    { header: "Jumlah Barang Keluar", accessor: "jumlah" },
+    { header: "Tanggal Keluar", accessor: "tanggal_keluar" },
+    { header: "Status", accessor: "status" },
   ];
 
   return (
     <div className="p-6">
       <Table
         columns={columns}
-        data={data}
+        data={barangKeluar?.data || []}
         showAddButton={false}
         showSearch={true}
         showPagination={true}
@@ -35,14 +67,13 @@ export default function MenyetujuiBarang() {
         showControls={true}
         showDetailsOnly={true}
         showAddMutasi={false}
-
         onDetailClick={(item) => setSelectedItem(item)}
-        
       />
       {selectedItem && (
         <DetailModal
           item={selectedItem}
           onClose={() => setSelectedItem(null)}
+          token={token}
         />
       )}
     </div>

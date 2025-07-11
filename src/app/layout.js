@@ -3,6 +3,7 @@ import "./globals.css";
 import LayoutProvider from "@/providers/LayoutProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <LayoutProvider children={children}>{children}</LayoutProvider>
+          <NotificationProvider>
+            <LayoutProvider children={children}>{children}</LayoutProvider>
+          </NotificationProvider>
         </AuthProvider>
 
         <Toaster />

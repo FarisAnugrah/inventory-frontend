@@ -1,11 +1,9 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { authRequest } from "@/utility/auth";
-import { consumeDynamicAccess } from "next/dist/server/app-render/dynamic-rendering";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
