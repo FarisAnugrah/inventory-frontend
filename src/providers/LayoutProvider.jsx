@@ -133,7 +133,7 @@ export default function LayoutProvider({ children }) {
     .toUpperCase();
 
   useEffect(() => {
-    setMenus(menuByRoles[user?.role || "admin"]);
+    setMenus(menuByRoles[user?.role || "staff"]);
   }, [user]);
 
   return (
