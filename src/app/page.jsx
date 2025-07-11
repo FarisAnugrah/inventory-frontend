@@ -100,14 +100,6 @@ export default function Dashboard() {
       count: barangKeluar?.data?.data?.length || 0,
     },
   ];
-  const dataLine = [
-    { name: "Mon", value: 30 },
-    { name: "Tue", value: 20 },
-    { name: "Wed", value: 45 },
-    { name: "Thu", value: 50 },
-    { name: "Fri", value: 72 },
-    { name: "Sat", value: 80 },
-  ];
 
   const dataPie = barang?.data?.data?.reduce((acc, item) => {
     const category = item?.kategori?.nama_kategori || "Uncategorized";

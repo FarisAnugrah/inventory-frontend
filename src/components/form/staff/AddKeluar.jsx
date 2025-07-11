@@ -106,7 +106,7 @@ export default function TambahKeluarPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-4">Detail Barang Masuk</h1>
+      <h1 className="text-xl font-bold mb-4">Detail Barang Keluar</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

@@ -66,7 +66,7 @@ export default function CustomTable(param) {
   };
 
   const handleDelete = async (item, endpoint) => {
-      Swal.fire({
+    Swal.fire({
       title: `Yakin hapus data ${item.name || item.nama_barang || "ini"}?`,
       icon: "warning",
       showCancelButton: true,
@@ -77,7 +77,7 @@ export default function CustomTable(param) {
       if (result.isConfirmed) {
         Swal.fire({
           title: "Deleted!",
-          text: "Your file has been deleted.",
+          text: "Your data has been deleted.",
           icon: "success",
         }).then(async () => {
           await fetch(
@@ -97,7 +97,6 @@ export default function CustomTable(param) {
       }
     });
   };
-
 
   // Filter data by date range
   const filteredData = data.filter((row) => {
