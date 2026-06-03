@@ -12,11 +12,17 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login, user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login({ email, password });
+    setLoading(true);
+    try {
+      await login({ email, password });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -98,8 +104,12 @@ export default function Login() {
             At least one uppercase letter
           </p>
 
-          <button type="submit" className="w-xs btn btn-primary text-white">
-            Login
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-xs btn btn-primary text-white"
+          >
+            {loading ? <span className="loading loading-spinner"></span> : "Login"}
           </button>
         </form>
       </div>

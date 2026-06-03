@@ -105,18 +105,12 @@ export default function LayoutProvider({ children }) {
 
   const getPageTitle = (path) => {
     const titles = {
-      "/dashboard": "Dashboard",
-      "/dashboard": "Dashboard",
-      "/dashboard": "Dashboard",
+      "/": "Dashboard",
       "/pengelola-pengguna": "User Management",
       "/pengelola-kategori": "Pengelola Kategori",
       "/stok": "Stok Barang",
-      "/stok": "Stok Barang",
-      "/barangMasuk/admin": "Barang Masuk",
-      "/barangMasuk/staff": "Barang Masuk",
+      "/barangMasuk": "Barang Masuk",
       "/barangKeluar": "Barang Keluar",
-      "/barangKeluar": "Barang Keluar",
-      // "/mutasiBarang": "Mutasi Barang Antar Gudang",
       "/laporanBarangMasuk": "Laporan Barang Masuk",
       "/laporanBarangKeluar": "Laporan Barang Keluar",
       "/menyetujui-barang": "Menyetujui Barang Keluar",
@@ -126,14 +120,19 @@ export default function LayoutProvider({ children }) {
   };
 
   const initialName = user?.name
-    .match(/(^\S\S?|\b\S)?/g)
-    .join("")
-    .match(/(^\S|\S$)?/g)
-    .join("")
-    .toUpperCase();
+    ? user.name
+        .match(/(^\S\S?|\b\S)?/g)
+        .join("")
+        .match(/(^\S|\S$)?/g)
+        .join("")
+        .toUpperCase()
+    : "";
 
   useEffect(() => {
-    setMenus(menuByRoles[user?.role || "admin"]);
+    const role = user?.role || "admin";
+    // Standardize role to handle 'manajer' vs 'manager'
+    const mappedRole = role === "manajer" ? "manager" : role;
+    setMenus(menuByRoles[mappedRole] || menuByRoles["admin"]);
   }, [user]);
 
   return (

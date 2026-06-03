@@ -1,8 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { authRequest } from "@/utility/auth";
 
 const AuthContext = createContext();
 
@@ -14,12 +15,12 @@ export const AuthProvider = ({ children }) => {
     initialized: false,
   });
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
     const user = JSON.parse(sessionStorage.getItem("user") || "null");
 
-    // Security: Validate token format before using
     if (token && user) {
       setAuthState({
         token,
@@ -27,42 +28,30 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated: true,
         initialized: true,
       });
+
+      if (pathname.startsWith("/auth")) {
+        router.push("/");
+      }
     } else {
       setAuthState((prev) => ({ ...prev, initialized: true }));
-
-      // Clear invalid tokens
-      if (token) {
-        sessionStorage.removeItem("access_token");
-        sessionStorage.removeItem("user");
+      
+      if (!pathname.startsWith("/auth")) {
+        router.push("/auth/login");
       }
-
-      router.push("/auth/login");
     }
-  }, []);
+  }, [pathname, router]);
 
   const login = async (credentials) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_APP_BASEURL}/api/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(credentials),
-          referrerPolicy: "no-referrer",
-        }
-      );
+      const response = await authRequest("login", credentials);
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.meta.message || "Login Failed");
+        throw new Error(errorData.meta?.message || "Login Gagal");
       }
 
       const result = await response.json();
-      const token = result.token;
-      const user = result?.data;
+      const { token, data: user } = result;
 
       setAuthState({
         isAuthenticated: true,
@@ -74,34 +63,36 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.setItem("access_token", token);
       sessionStorage.setItem("user", JSON.stringify(user));
 
-      router.push(`/`);
+      toast.success("Login Berhasil!");
+      router.push("/");
     } catch (error) {
-      toast.error(error.message || "Login Failed");
-
-      sessionStorage.removeItem("access_token");
-      sessionStorage.removeItem("user");
+      toast.error(error.message || "Terjadi kesalahan saat login");
     }
   };
 
-  const logout = () => {
-    fetch(`${process.env.NEXT_APP_BASEURL}/api/logout`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${authState.token}`,
-      },
-    }).catch((error) => console.error("Logout API error:", error));
+  const logout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_APP_BASEURL}/api/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authState.token}`,
+          Accept: "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setAuthState({
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        initialized: true,
+      });
 
-    setAuthState({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      initialized: true,
-    });
-
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("user");
-
-    window.location.reload();
+      sessionStorage.removeItem("access_token");
+      sessionStorage.removeItem("user");
+      router.push("/auth/login");
+    }
   };
 
   const contextValue = {

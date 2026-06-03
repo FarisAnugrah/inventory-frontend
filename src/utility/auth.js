@@ -1,15 +1,18 @@
-export const authRequest = async (action, body = {}) => {
+export const authRequest = async (action, body = {}, method = "POST") => {
+  const baseUrl = process.env.NEXT_APP_BASEURL || "http://localhost:8000";
   try {
-    const response = await fetch(`http://localhost:8000/api/${action}`, {
-      method: "POST",
-      body: JSON.stringify({ ...body }),
+    const response = await fetch(`${baseUrl}/api/${action}`, {
+      method: method,
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
       },
+      body: JSON.stringify(body),
     });
 
-    return response.json();
+    return response;
   } catch (error) {
-    console.error(error);
+    console.error("Auth Request Error:", error);
+    throw error;
   }
 };
